@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="popper.js"></script>
+	<script type="text/javascript" src="bootstrap.min.js"></script>
+
+<style type="text/css">
+  .navbar {
+  	box-shadow: 1px 2px 4px rgba(0,0,0,.5);
+  }
+	.navbar-brand {
+		font-size: 2rem;
+		font-weight: 700;
+		letter-spacing: .2rem;
+	}
+
+	.navbar-dark .navbar-nav .nav-link  {
+		color:blue;
+		font-size: 1.3rem;
+		text-transform: uppercase;
+	}
+	.container-fluid {
+		padding:0;
+		margin:0;
+	}
+.body {
+	
+  width:100%;
+  height:auto;
+
+}
+.body .jumbotron {
+	padding:0;
+	margin:0;
+	border-radius: 0;
+}
+.receipt {
+
+	box-shadow: 1px 2px 4px rgba(0,0,0,.5);
+	max-height:340px !important;
+}
+
+.table-content{
+	max-height:200px !important;
+	overflow-y: scroll;
+}
+.square {
+	width:140px;
+	border-radius: 50%;
+	box-shadow: 1px 2px 4px rgba(0,0,0,.5);
+	
+	margin:auto;
+	margin-bottom: .3rem;
+
+}
+.square .fa {
+	color:red;
+}
+.square:hover {
+	background-color: rgba(0,0,255,.8);
+	color:white;
+
+}
+#category .table td {
+	padding:0px;
+	margin:0;
+	width:100px;
+}
+
+#category table h4 {
+	font-size:17px;
+	font-family:Times New Roman,courier;
+	text-transform:lowercase;
+	letter-spacing: -1px;
+	margin-top: .2rem;
+	font-weight:400;
+}
+ .title {
+	font-family: palatino;
+	text-transform: uppercase;
+}
+/*button styles*/
+#pay {
+	font-size: 1.1rem;
+}
+/*styles for icons on the table*/
+.add,.remove,.del {
+	color:blue;
+}
+
+.add:hover,.remove:hover,.del:hover{
+	color:red;
+	font-size: 1.5rem;
+}
+
+/*model styles*/
+.bg-modal{
+
+width: 100%;
+height:100%;
+background: rgba(0,0,0,.5);
+position: absolute;
+top:0;
+display: flex;
+justify-content: center;
+align-items: center;
+display:none;
+z-index: 2;
+}
+.modal-content {
+
+width:300px;
+height:auto;
+background:white;
+border:none;
+border-radius: 10px
+color:blue;
+position: relative;
+
+
+}
+
+/*#pay {
+	width:100px;
+	height:50px;
+	border:none;
+	border-radius: 20px;
+	position: relative;
+   margin-left:20%;
+	color:blue;
+}*/
+/*.modal-content table {
+	width: 100%;
+	height:80%;
+	color:blue;
+}*/
+.modal-content table td, .modal-content table th {
+
+width:10%;
+text-align: left;
+padding: 20px 0px;
+
+
+}
+.modal-content {
+
+top:-500px;
+animation: drop 0.5s ease forwards; 
+}
+
+#form {
+
+	height:400px;
+	text-align: center;
+	padding:10px;
+	border:none;
+	box-shadow: 1px 10px 25px green;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#form input {
+
+	width:100%;
+	height: 50px;
+	border:none;
+	outline:none;
+	border-bottom: 1px solid green;
+	font-size: 2em;
+}
+
+@keyframes drop {
+
+0%{}
+
+70% {
+transform:translateY(600px);
+
+}
+
+100% {
+transform:translateY(550px);
+
+}
+}
+/*table modal styles*/
+.modal-content .table {
+	padding:0;
+	margin:0;
+}
+/*
+modal form styles*/
+.modal-content .form-control {
+	
+	border-bottom:1px solid green;
+	font-size:2rem;
+}
+.modal-content input[type="text"]:hover {
+border:none;
+	
+border-bottom:1px solid green;
+
+}
+
+/*toast styles*/
+
+#toast {
+			visibility:hidden;
+			min-width: 300px;
+			margin-left: -635px;
+			background-color: #811;
+			color:green;
+			text-align: center;
+			border-radius: 2px;
+			padding: 15px;
+			position:fixed;
+			left:50%;
+			bottom: 30px;
+			font-size:16px;
+		}
+
+	#toast.show {
+		visibility: visible;
+		animation: fadeIn 0.5s, fadeout 0.5s 2.5s;
+	}
+
+	@keyframes fadeIn {
+		from {bottom:0px; opacity:0;}
+
+		to{bottom:30px; opacity: 1}
+
+	}
+
+	@keyframes fadeout {
+		from {bottom:30px; opacity: 1;}
+
+		to{bottom:0px; opacity:0;}
+		
+	}
+/*
+
+	end of toast styles*/
+</style>
+
+	<title>Basic Bootstrap Classes</title>
+</head>
+<body>
+
+
+<!-- Modal section -->
+
+   <div class="card bg-modal text-center" id="bg-modal">
+	
+   <div class="modal-content" id="bg-modal-content">
+   	<!-- <div class="card-header">
+   		<h4 class="bg-danger text-white w-100" align="center">EASYCAFE</h4>
+   	<h6 align="center">RECEIPT</h6>
+   	</div>
+   	<table class="table">
+   		<tr>
+   			<th>#</th>
+   			<th>Name</th>
+   			<th>price</th>
+   			<th>Total</th>
+   		</tr>
+
+   		 		<tr>
+   			<td>1</td>
+   			<td>Sugar</td>
+   			<td>10</td>
+   			<td>100</td>
+   		     </tr>
+
+   		 	<tr>
+   			<td>1</td>
+   			<td>Sugar</td>
+   			<td>10</td>
+   			<td>100</td>
+   		     </tr>
+   		      		 		<tr>
+   			<td>1</td>
+   			<td>Sugar</td>
+   			<td>10</td>
+   			<td>100</td>
+   		     </tr>
+   	</table>
+
+<div class="card-footer ">
+	<div>Mpesa Code:<strong>KBGTUDSD</strong></div>
+	<div>Amount paid:<strong>100</strong></div>
+	<p style="color:red">Thank you for being our patner </p>
+   	<button class="btn btn-danger btn-lg">Print</button>
+   </div> -->
+<div class="card">
+	  <div class="card-header bg-success text-white"><h2 class="h3">PAY VIA MPESA</h2></div>
+	  <div class="card-body">
+	  	<form>
+	  		<div class="form-group">
+	  		<label>TYPE YOUR PHONE NO:</label>
+	  		<input type="text" name="phone" class="form-control">
+            </div>
+
+            <div class="form-group">
+	  		
+	  		<input type="submit" name="phone" id="pay" class="btn btn-outline-primary w-100" value="PAY NOW!!">
+            </div>
+	  	</form>
+	  </div>
+</div>
+
+   </div>
+</div>
+
+
+<!-- end of modal section -->
+
+<!-- start navigation bar -->
+
+   <nav class="navbar navbar-expand navbar-dark bg-danger fixed-top">
+	<a href="" class="navbar navbar-brand">EASYCAFE <span class="fa fa-hotel"></span></a>
+
+	<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#list">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse">
+		<ul class=" navbar-nav ">
+			<li class="nav-item"><a class="nav-link" href="">Home</a></li>
+				<li class="nav-item"><a class="nav-link" href="">Admin</a></li>
+
+	
+		</ul>
+	</div>
+</nav>
+
+<!-- end of navigation bar -->
+
+  <!-- start of the body -->
+
+        <div class="container-fluid">
+	<div class="body jumbotron mt-3">
+		<div class="row">
+			<!-- recipt section -->
+			<div class="col-md-3  receipt mt-5 fixed ">
+				<h6 id="Response">waiting  peocessing of the response</h6>
+				<div class="card ">
+					<div class="card-header bg-success text-white text-center"><span class="fa fa-shopping-basket fa-2x"></span>CART COLLECTION</div>
+				<div class="table-content" class="overflow" id="rtable">
+				<div class="card bg-light text-center">
+					<h4>Pick</h4>
+					<h6>Something</h6>
+					<h6 class="lead">To eat!!!</h6>
+					<h4><span class="fa fa-arrow-right fa-2x fa-flip-vertical"></span></h4>
+				</div>
+				</div>
+			</div><!-- end of the card -->
+			 <div class="card-footer d-flex" >
+				<button class="btn   btn-danger mb-0 w-50"><span id="total_div">0</span></button>
+
+				<button id="submit" class="btn btn-outline-danger mb-0 btn-fill w-50 justify-content">Pay Now <span class="fa fa-money fa-2x fa-spin"></span></button>
+			</div>
+		</div><!-- end of card footer -->
+
+		<!-- end of receipt section -->
+
+
+
+		<div class="col-md-9" id="category">
+
+	
+			<table class="table text-center m-1">
+		<!-- --------------- include the Category Driver ------------->
+	
+
+
+
+				<tr class="">
+	<?php
+
+		require 'category.php';
+		?>
+
+					
+				</tr>
+				
+			</table>
+		</div>
+		</div>
+	</div>
+</div>
+
+
+  <!-- end of the body -->
+
+
+
+
+
+<div id="toast">You Picked chapo</div>
+<script type="text/javascript" src="app.js">
+	
+
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+})
+</script>
+</body>
+</html>

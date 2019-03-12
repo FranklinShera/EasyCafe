@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="bootstrap.min.js"></script>
+	<style type="text/css">
+	body {
+		overflow:hidden;
+	}
+nav {
+
+
+width:100%;
+height: 50px;
+background: #322;
+color:white;
+font-family: verdana;
+font-weight: 1000;
+
+}
+nav h4 {
+	line-height: 50px;
+	margin-left: 20px;
+}
+.pull {
+	
+	height: 600px;
+    margin-top: 50px;
+
+}
+
+.right {
+	width: 75%;
+float:right;
+}
+.right table {
+	width:100%;
+}
+.left{
+	width: 25%;
+	float:left;
+}
+#receipt h2 {
+    background: #322;
+    text-align: center;
+	color:white;
+}
+#receipt .table {
+	width: 100%;
+	font-size: 16px;
+    height: 100px;
+	overflow-y: scroll;
+}
+#receipt table td{
+	line-height: 50px;
+}
+.overflow {
+	height:300px;
+	overflow: scroll;
+}
+thead{
+	text-align: center;
+
+}
+
+thead td, .square {
+  width:230px;
+	float:left;
+	
+}
+.square {
+
+
+}
+.item {
+
+width:150px;
+height: auto;
+border-radius: 3px;
+background-color: #322;
+color:white;
+text-align: center;
+margin: auto;
+}
+
+.square {
+ margin-top:20px;
+}
+.item:hover {
+
+background:blue;
+}	
+.title {
+	text-align: center;
+}
+.item h4 {
+	text-transform: lowercase;
+}
+
+#toast {
+			visibility:hidden;
+			min-width: 300px;
+			margin-left: -635px;
+			background-color: #811;
+			color:#fff;
+			text-align: center;
+			border-radius: 2px;
+			padding: 15px;
+			position:fixed;
+			left:50%;
+			bottom: 30px;
+			font-size:16px;
+		}
+
+	#toast.show {
+		visibility: visible;
+		animation: fadeIn 0.5s, fadeout 0.5s 2.5s;
+	}
+
+	@keyframes fadeIn {
+		from {bottom:0px; opacity:0;}
+
+		to{bottom:30px; opacity: 1}
+
+	}
+
+	@keyframes fadeout {
+		from {bottom:30px; opacity: 1;}
+
+		to{bottom:0px; opacity:0;}
+		
+	}
+
+/*model styles*/
+.bg-modal{
+
+width: 100%;
+height:100%;
+background: rgba(0,0,0,.2);
+position: absolute;
+top:0;
+display: flex;
+justify-content: center;
+align-items: center;
+display: none;
+z-index: 4;
+}
+.modal-content {
+
+width:300px;
+height:auto;
+background:white;
+border:none;
+border-radius: 10px
+color:blue;
+position: relative;
+
+
+}
+
+#pay {
+	width:100px;
+	height:50px;
+	border:none;
+	border-radius: 20px;
+	position: relative;
+   margin-left:20%;
+	color:blue;
+}
+.modal-content table {
+	width: 100%;
+	height:80%;
+	color:blue;
+}
+.modal-content table td, .modal-content table th {
+
+width:10%;
+text-align: left;
+padding: 20px 0px;
+
+
+}
+.modal-content {
+
+top:-500px;
+animation: drop 0.5s ease forwards; 
+}
+
+#form {
+
+	height:400px;
+	text-align: center;
+	padding:10px;
+	border:none;
+	box-shadow: 1px 10px 25px green;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#form input {
+
+	width:100%;
+	height: 50px;
+	border:none;
+	outline:none;
+	border-bottom: 1px solid green;
+	font-size: 2em;
+}
+
+@keyframes drop {
+
+0%{}
+
+70% {
+transform:translateY(600px);
+
+}
+
+100% {
+transform:translateY(550px);
+
+}
+}
+
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+
+<nav>
+	<h4>EasyCafe</h4>
+</nav>
+
+
+<!-- modal div -->
+
+<div class="bg-modal" id="bg-modal">
+	
+   <div class="modal-content">
+   	<h4 align="center">RECEIPT</h4>
+   	<hr>
+   	<table>
+   		<tr>
+   			<th>#</th>
+   			<th>Name</th>
+   			<th>price</th>
+   			<th>Total</th>
+   		</tr>
+
+   		 		<tr>
+   			<td>1</td>
+   			<td>Sugar</td>
+   			<td>10</td>
+   			<td>100</td>
+   		     </tr>
+
+   		 	<tr>
+   			<td>1</td>
+   			<td>Sugar</td>
+   			<td>10</td>
+   			<td>100</td>
+   		     </tr>
+   		      		 		<tr>
+   			<td>1</td>
+   			<td>Sugar</td>
+   			<td>10</td>
+   			<td>100</td>
+   		     </tr>
+   	</table>
+
+   	<button id="pay">Pay Now</button>
+   </div>
+</div>
+
+
+
+
+<div class="cover">
+	<div class="pull right">
+		<table>
+	
+							<tbody>
+					<tr>
+
+<!-- --------------- include the Category Driver ------------->
+		<?php
+
+		require 'category.php';
+		?>
+
+			
+			</tr>
+
+			</tbody>
+
+		</table>
+	</div>
+
+
+	<div class="pull left">
+		<div id="receipt" class="card">
+			<h5 id="Response">waiting  peocessing of the response</h6>
+			<div class="card-header"><h3>Pay Receipt</h3></div>
+			<div class="overflow" id="rtable">
+		
+					</div>
+				<div id="result">
+					<h4>Total Amount is ksh:<span id="total_div">0</span></h4>
+				</div>
+				<tr>
+					<td colspan="3">
+						<button id="submit" class="btn btn-success">PAY VIA MPESA</button>
+					</td>
+				</tr>
+		
+		</div>
+	</div>
+</div>
+
+<div id="toast">You Picked chapo</div>
+<script type="text/javascript" src="app.js">
+	
+
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+})
+</script>
+</body>
+</html>

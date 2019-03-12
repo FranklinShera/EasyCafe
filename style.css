@@ -1,0 +1,319 @@
+ .navbar {
+  	box-shadow: 1px 2px 4px rgba(0,0,0,.5);
+  }
+	.navbar-brand {
+		font-size: 2rem;
+		font-weight: 700;
+		letter-spacing: .2rem;
+	}
+
+	.navbar-dark .navbar-nav .nav-link  {
+		color:blue;
+		font-size: 1.3rem;
+		text-transform: uppercase;
+	}
+	.container-fluid {
+		padding:0;
+		margin:0;
+	}
+.body {
+	
+  width:100%;
+  height:auto;
+
+}
+.body .jumbotron {
+	padding:0;
+	margin:0;
+	border-radius: 0;
+}
+.receipt {
+
+	box-shadow: 1px 2px 4px rgba(0,0,0,.5);
+	max-height:340px !important;
+}
+/*fixed section styles*/
+.fixed {
+	position: sticky;
+	top:100px;
+}
+
+.table-content{
+	max-height:200px !important;
+	overflow-y: scroll;
+}
+.square {
+	width:140px;
+	border-radius: 50%;
+	box-shadow: 1px 2px 4px rgba(0,0,0,.5);
+	
+	margin:auto;
+	margin-bottom: .3rem;
+
+}
+.square .fa {
+	color:red;
+}
+.square:hover {
+	background-color: rgba(0,0,255,.8);
+	color:white;
+
+}
+#category .table td {
+	padding:0px;
+	margin:0;
+	width:100px;
+}
+
+#category table h4 {
+	font-size:17px;
+	font-family:Times New Roman,courier;
+	text-transform:lowercase;
+	letter-spacing: -1px;
+	margin-top: .2rem;
+	font-weight:400;
+}
+/*New Added styles*/
+
+#category ul li {
+	width:20%;
+	font-size: 16px;
+	font-family:Times New Roman,courier;
+	text-transform:lowercase;
+	letter-spacing: -1px;
+	margin-top: .2rem;
+	font-weight:400;
+
+}
+.rotate {
+margin-left:0px !important;
+	width:300px;
+	transform:rotate(90deg);
+}
+
+
+
+#category .card-header {
+	text-transform: uppercase;
+	font-size: 1.2rem;
+	font-family: New Times Roman,Helvetica;
+	color:blue;
+	text-align:left !important;
+	border-radius:4px;
+}
+
+
+ .title {
+	font-family: palatino;
+	text-transform: uppercase;
+}
+/*button styles*/
+#pay {
+	font-size: 1.1rem;
+}
+/*styles for icons on the table*/
+.add,.remove,.del {
+	color:blue;
+}
+
+.add:hover,.remove:hover,.del:hover{
+	color:red;
+	font-size: 1.5rem;
+}
+
+/*model styles*/
+.bg-modal{
+
+width: 100%;
+height:100%;
+background: rgba(0,0,0,.5);
+position: absolute;
+top:0;
+display: flex;
+justify-content: center;
+align-items: center;
+display:none;
+z-index: 2;
+}
+.modal-content {
+
+width:300px;
+height:auto;
+background:white;
+border:none;
+border-radius: 10px
+color:blue;
+position: relative;
+
+
+}
+
+/*#pay {
+	width:100px;
+	height:50px;
+	border:none;
+	border-radius: 20px;
+	position: relative;
+   margin-left:20%;
+	color:blue;
+}*/
+/*.modal-content table {
+	width: 100%;
+	height:80%;
+	color:blue;
+}*/
+.modal-content table td, .modal-content table th {
+
+width:10%;
+text-align: left;
+padding: 20px 0px;
+
+
+}
+.modal-content {
+
+top:-500px;
+animation: drop 0.5s ease forwards; 
+}
+
+#form {
+
+	height:400px;
+	text-align: center;
+	padding:10px;
+	border:none;
+	box-shadow: 1px 10px 25px green;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#form input {
+
+	width:100%;
+	height: 50px;
+	border:none;
+	outline:none;
+	border-bottom: 1px solid green;
+	font-size: 2em;
+}
+
+@keyframes drop {
+
+0%{}
+
+70% {
+transform:translateY(600px);
+
+}
+
+100% {
+transform:translateY(550px);
+
+}
+}
+/*table modal styles*/
+.modal-content .table {
+	padding:0;
+	margin:0;
+}
+/*
+modal form styles*/
+.modal-content .form-control {
+	
+	border-bottom:1px solid green;
+	font-size:2rem;
+}
+.modal-content input[type="text"]:hover {
+border:none;
+	
+border-bottom:1px solid green;
+
+}
+
+/*toast styles*/
+
+#toast {
+			visibility:hidden;
+			min-width: 300px;
+			margin-left: -635px;
+			background-color: #811;
+			color:green;
+			text-align: center;
+			border-radius: 2px;
+			padding: 15px;
+			position:fixed;
+			left:50%;
+			bottom: 30px;
+			font-size:16px;
+		}
+
+	#toast.show {
+		visibility: visible;
+		animation: fadeIn 0.5s, fadeout 0.5s 2.5s;
+	}
+
+	@keyframes fadeIn {
+		from {bottom:0px; opacity:0;}
+
+		to{bottom:30px; opacity: 1}
+
+	}
+
+	@keyframes fadeout {
+		from {bottom:30px; opacity: 1;}
+
+		to{bottom:0px; opacity:0;}
+		
+	}
+/*
+
+	end of toast styles*/
+
+
+	.spinner {
+	padding:10px;
+	border-radius: 4px;
+	height:125px;
+	margin-bottom: 10px;
+
+
+
+}
+.spin-icon {
+animation: playing .6s infinite linear;
+}
+
+@keyframes playing{
+   from {
+   	transform: rotate(0deg);
+   }
+
+   to {
+   	transform:rotate(39deg);
+   }
+}
+/*//counter classes*/
+.counter {
+	width:60px;
+	height:60px;
+	border-radius: 50%;
+	background:white;
+	color:blue;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	top:-50px;
+	margin:0px auto;
+	font-weight: 900;
+	font-size:1.7rem;
+	box-shadow: 1px 2px 4px rgba(0,0,0,.5);
+	font-family: New Times Romans ,Georgia;
+}
+#counter_div {
+	color:blue;
+}
+/*end of loading spinner styles*/
+
+
+/*url div styles*/ 

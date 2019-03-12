@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="fon/css/all.css">
+	 <link rel="stylesheet" href="Circular/font.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+
+	<title>EasyCafe Admin</title>
+	<style type="text/css">
+#promotion .promo_btn {
+	background-color: #9A1F41 !important;
+	border:none !important;
+}
+#promotion .promo_btn:hover {
+	  background-color:   #007bff !important;
+}
+#promotion .card-header {
+background-color: rgba(204,193,193,.9) !important;
+color:#6E16A2;
+text-shadow:2px 0px 5px rgba(0,0,0,.6);
+}
+
+
+	</style>
+
+</head>
+<body>
+
+
+<nav class="navbar" id="navbar">
+	<h1>EasyCafe</h1>
+
+	<p class="navbar-right"><span class="fa fa fa-user fa-2x"></span> Kiprono</p>
+</nav>
+
+<div class="row">
+	<div class="col-3">
+		<div class="card navigation mt-3 ml-2">
+			<div class="card-header text-center w-100 "><h2 class="Circular">Navigation</h2></div>
+			<div class="card-body p-0 m-0">
+		<ul class="list-group p-0  w-75" id="navigation_li">
+
+		<li class="list-group-item my-3">Home</li>
+		<li class="list-group-item my-3">Users</li>
+		<li class="list-group-item my-3">Products</li>
+		<li class="list-group-item my-3">Statistics</li>
+		<li class="list-group-item my-3">Promotion</li>
+		</ul>
+
+			</div>
+		</div>
+	</div>
+	<div class="col-9 mt-3 " id="promotion">
+      <div class="row">
+      	<div class="col-6 p-2">
+      		 <div class="btn btn-primary w-75 promo_btn mt-5  p-5"> New Promotion</div>
+      		 <div class="btn btn-primary w-75 promo_btn mt-5 p-5"> Edit Promotion</div>
+      		 <div class="btn btn-primary w-75 promo_btn mt-5 p-5"> View Promotions</div>
+      	</div>
+      	<div class="col-6 mt-5 p-2">
+      		<div class="card w-75">
+      			<div class="card-header text-center">
+      				<h4>Create New Promotion</h4>
+      			</div>
+
+      			<form class="px-2">
+      				<div class="form-group">
+      					<label>Enter promotion name:</label>
+      					<input type="text" name="prom_name" class="form-control">
+      				</div>
+
+      					<div class="form-group">
+      					<label>Select Category</label>
+      					<select name="Category" class="form-control">
+      						<option value="1">Main Meals</option>
+      						<option value="1">Beverages</option>
+      						<option value="1">Drinks</option>
+      						<option value="1">Others</option>
+      					</select>
+      				</div>
+      					<div class="form-group">
+      					<label>Select Product</label>
+      					<select name="product_promo" class="form-control">
+      						<option value="1">Boiled eggs</option>
+      						<option value="1">Chapo</option>
+      						<option value="1">Mashed potato</option>
+      						<option value="1">Many more</option>
+      					</select>
+      				</div>
+      				<div class="form-group">
+      					<label>Enter Price off</label>
+      					<input type="number" name="text" class="form-control">
+      					
+      				</div>
+
+      					<div class="form-group text-center">
+      					<input type="button" name="promo_submit"  value="Submit" class="btn btn-success w-100 py-3 ">
+      					
+      				</div>
+      				
+
+      			</form>
+      		</div>
+      	</div>
+      </div>
+	</div>
+</div>

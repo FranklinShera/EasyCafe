@@ -1,0 +1,175 @@
+/* ............HOME STYLES.............. */
+body {
+	background: #E8E8E8;
+	font-family: 'CircularBold';
+	overflow-x: hidden;
+}
+
+h1 {
+	font-family: 'CircularBold';
+	color:#DFDFDF;
+	word-spacing: -1;
+	text-shadow: 5px 0 10px #000000;
+}
+#navbar {
+	width:100% !important;
+	background:#9A1F41 !important;
+	box-shadow: -1px 0px 10px #000000;
+}
+#navbar p {
+	margin-right:10%;
+	color:#9F8E8E;
+}
+.navigation {
+	background: #ffffff;
+}
+.navigation .card-header {
+	background: #9A1F41;
+	color:#E6CDD4;
+	text-shadow: 4px 0 5px #000000;
+}
+
+#navigation_li  li{
+	background: #EBEBEB !important;
+	width:100% !important;
+	text-align: center;
+    color:#6E16A2;
+    font-size:16px;
+    font-family:'Circular';
+    border:none !important;
+}
+#navigation_li  li:hover,.activated {
+	background: #6E16A2 !important;
+	color:#EBEBEB;
+}
+
+
+#body .row {
+	width:80%;
+}
+#customers,#products, #sales{
+	background: #D07474;
+	height:150px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 3px;
+	box-shadow: 1px 0px 10px #000000;
+}
+ #products{
+	background: #6E16A2;
+}
+#sales {
+	background: #9A1F41;
+
+}
+.amount {
+	border-radius: 50%;
+	color:#802A42;
+	background: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height:90px;
+	font-size: 25px;
+	text-shadow: 3px 0 10px #000000;
+
+}
+.description {
+	color:#ffffff;
+}
+#body2 {
+	margin-top: 5rem !important;
+}
+#body2 .card {
+	width:80%;
+	background-color: #6E16A2;
+	height:200px;
+}
+#body2 .card-header {
+	background: white !important;
+}
+#body2 a {
+	box-shadow: 2px 0 8px #000000;
+}
+#card2 {
+	background: #9A1F41 !important;
+}
+#card3 {
+	background: #D07474 !important;
+}
+
+
+/* ............END OF HOME STYLES...............*/ 
+
+
+/*.......BEGIN USERS PAGE STYLES........*/
+
+#user-body .card-deck .card img{
+	width:150px !important;
+	height:150px !important;
+	margin: auto !important;
+	border-radius: 50%;
+	margin-top: 2px !important;
+}
+
+
+
+/*........End users page styles...........*/
+
+
+/*......BEGIN PRODUCT PAGE STYLES..............*/
+
+	#product-body .card{
+  height: auto;
+  color:white;
+  border-radius: 10px !important;
+
+
+	}
+	#product-body .card table{
+		background: #AE4C67 !important;
+		border-radius: 4px !important;
+		box-shadow: 1px 2px 8px rgba(0,0,0,.6);
+		text-align: center !important;
+	}
+		#product-body .card-p table{
+		background: #6E16A2 !important;
+
+	}
+ .circle-badge {
+	width: 60px ;
+	height:60px ;
+	border-radius: 50%;
+	background:#EBEBEB;
+	color:black;
+	font-size: 17px;
+	font-weight: 200;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 2px 2px 5px rgba(0,0,0,.3);
+}
+#product-table {
+	font-size:16px;
+}
+#product-table .tbody{
+
+}
+#product-table thead tr td{
+	color:#AE4C67;
+	text-shadow: 1px 2px 5px rgba(0,0,0,.6);
+}
+#product-table .fa-edit ,#product-table .fa-trash {
+	font-size:23px;
+}
+#product-table1 thead tr td{
+	color:#F6BE0B;
+	text-shadow: 1px 2px 5px rgba(0,0,0,.6);
+}
+#product-table1 .fa-edit ,#product-table1 .fa-trash {
+	font-size:18px;
+}
+
+
+/*.....END PRODUCTS STYLES..........*/
