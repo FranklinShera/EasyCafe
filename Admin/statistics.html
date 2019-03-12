@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="fon/css/all.css">
+	 <link rel="stylesheet" href="Circular/font.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+
+	<title>EasyCafe Admin</title>
+	<style type="text/css">
+#statistic .round{
+     height:190px;
+     width:200px;
+     border-radius: 50%;
+     display: flex;
+     justify-content: center;
+     align-content: center;
+     margin:0px auto;
+     color:#6E16A2;
+     text-shadow: 3px 0 3px rgba(0,0,0,.6);
+     box-shadow: 0 0 5px rgba(0,0,0,.6);
+}
+#stat_sales {
+	border:3px solid #752424;
+}
+#stat_transaction {
+	border:3px solid #6E16A2;
+}
+#stat_top_card {
+	background-color: #D07474;
+	color:white;
+}
+#stat_top_card select{
+background-color: #9A1F41;
+color:white;
+}
+canvas {
+	width:100%;
+	height:500px;
+}
+	</style>
+
+
+</head>
+<body>
+
+
+<nav class="navbar" id="navbar">
+	<h1>EasyCafe</h1>
+
+	<p class="navbar-right"><span class="fa fa fa-user fa-2x"></span> Kiprono</p>
+</nav>
+
+<div class="row">
+	<div class="col-3">
+		<div class="card navigation mt-3 ml-2">
+			<div class="card-header text-center w-100 "><h2 class="Circular">Navigation</h2></div>
+			<div class="card-body p-0 m-0">
+		<ul class="list-group p-0  w-75" id="navigation_li">
+
+		<li class="list-group-item my-3">Home</li>
+		<li class="list-group-item my-3">Users</li>
+		<li class="list-group-item my-3">Products</li>
+		<li class="list-group-item my-3">Statistics</li>
+		<li class="list-group-item my-3">Promotion</li>
+		</ul>
+
+			</div>
+		</div>
+	</div>
+	<div class="col-9 mt-3 " id="statistic">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="stat_container text-center mt-2">
+				<div class="card round" id="stat_sales">
+					<h2 class="display-4">123K</h2>
+				</div>
+				<h5 class="card-text mt-1" style="color:#9A1F41">AGGREGATE SALES</h5>
+				</div>
+
+				<div class="stat_container text-center mt-5">
+				<div class="card round" id="stat_transaction">
+					<h2 class="display-4">123</h2>
+				</div>
+				<h5 class="card-text mt-1">AGGREGATE TRANSACTIONS</h5>
+				</div>
+
+			</div>
+			<div class="col-md-8 mx-auto">
+			
+				<div class="card" id="stat_top_card">
+					<table class="table" >
+						<tr>
+							<td><h4>Weekly Transactions</h4></td>
+							<td>
+								<select name="Month" class="form-control" >
+							<option value="0" selected>Select a Month</option>
+							<option value="1">January</option>
+							<option value="2">February</option>
+							<option value="3">March</option>
+							<option value="4">April</option>
+
+						</select>
+
+							</td>
+									<td>
+								<select name="week" class="form-control" >
+							<option value="0" selected>Select a week</option>
+							<option value="1">Week 1</option>
+							<option value="2">Week 2</option>
+							<option value="3">Week 3</option>
+							<option value="4">Week 4</option>
+
+						</select>
+						
+							</td>
+						</tr>
+					</table>
+				
+					
+				</div>
+<canvas id="canvas"  height="350" width="500" style="border:1px solid white" class="mt-1">
+	
+</canvas>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+//get canvas
+	var canvas=document.querySelector("#canvas");
+	//get context
+	var context=canvas.getContext("2d");
+var values=['10','100','300','320','10','100','350'];
+	//declare constant width
+	var width=60;
+	var X=0;//starting x-axis position
+	var colors=['#811',"#6E16A2",'#811',"#6E16A2",'#811',"#6E16A2",'#811'];
+	context.fillStyle="#811";
+	for (var i = 0; i < values.length; i++) {
+		
+			context.fillStyle=colors[i];
+		
+		var h=values[i];
+		//draw
+		context.fillRect(X,canvas.height-h,width,h);
+
+		X+=width+1;
+	}
+
+</script>
+</body>
+</html>

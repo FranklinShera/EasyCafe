@@ -173,3 +173,24 @@ h1 {
 
 
 /*.....END PRODUCTS STYLES..........*/
+
+
+/*.........BEGIN PROMO STYLES*/
+
+#promotion .promo_btn {
+	background-color: #9A1F41 !important;
+	border:none !important;
+}
+#promotion .promo_btn:hover {
+	  background-color:   #007bff !important;
+}
+#promotion .card-header {
+background-color: rgba(204,193,193,.9) !important;
+color:#6E16A2;
+text-shadow:2px 0px 5px rgba(0,0,0,.6);
+}
+
+
+
+
+/*........END PROMO STYLES*/
