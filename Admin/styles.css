@@ -279,3 +279,18 @@ footer {
 
 /*
 .........End of Add user styles............*/
+
+/*........Add product to category styles.......*/
+
+
+	#addp_category {
+		margin-bottom: 155px;
+	}
+#addp_category .h3{
+	color:#242424 !important;
+	text-shadow:1px 0 5px rgba(0,0,0,.4);
+}
+
+
+
+/*....end of add product to category styles.......*/
