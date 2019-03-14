@@ -119,6 +119,9 @@ h1 {
 
 
 /*......BEGIN PRODUCT PAGE STYLES..............*/
+ #product-body{
+          margin-bottom: 53px;
+     } 
 
 	#product-body .card{
   height: auto;
@@ -228,3 +231,18 @@ canvas {
 }
 
 /*........End of statistics.........*/
+
+
+/*.......START OF FOOTER STYLES.......*/
+
+footer {
+	background-color: #9A1F41;
+	margin:0 !important;
+	color:#A9A9A9;
+	font-weight: 50;
+	font-size: 1.5rem;
+	text-shadow: 2px 0 5px rgba(0,0,0,.6);
+
+}
+
+/*.......END OF FOOTER STYLES........*/
