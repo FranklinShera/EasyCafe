@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="fon/css/all.css">
+	 <link rel="stylesheet" href="Circular/font.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+
+	<title>EasyCafe Admin</title>
+	<style type="text/css">
+
+
+	</style>
+
+</head>
+<body>
+
+
+<nav class="navbar" id="navbar">
+	<h1>EasyCafe</h1>
+
+	<p class="navbar-right"><span class="fa fa fa-user fa-2x"></span> Kiprono</p>
+</nav>
+
+<div class="row">
+	<div class="col-3">
+		<div class="card navigation mt-3 ml-2">
+			<div class="card-header text-center w-100 "><h2 class="Circular">Navigation</h2></div>
+			<div class="card-body p-0 m-0">
+		<ul class="list-group p-0  w-75" id="navigation_li">
+
+		<li class="list-group-item my-3">Home</li>
+		<li class="list-group-item my-3">Users</li>
+		<li class="list-group-item my-3">Products</li>
+		<li class="list-group-item my-3">Statistics</li>
+		<li class="list-group-item my-3">Promotion</li>
+		</ul>
+
+			</div>
+		</div>
+	</div>
+	<div class="col-9 mt-3 " id="adduser">
+
+       <form class="w-100">
+       	<div class="card w-75 mx-auto text-center p-2">
+       		<h2 class="h3">Add New User</h2>
+       	</div>
+
+       	<div class="row mt-3 mx-auto">
+       <div class="col-6">
+       	<div class="round_image"></div>
+       </div>
+       <div class="col-6">
+       <button class="btn btn-success mt-5 w-auto">
+       	Upload picture
+       </button>
+       	 </div>
+
+      <div class="row text-center mx-auto w-100 mt-3">
+	<div class="col-6">
+       <div class="form-group">
+       	<input type="name" name="firstname" class="form-control" placeholder="Enter Firstname">
+       </div>
+
+          <div class="form-group">
+       	<input type="name" name="lastname" class="form-control" placeholder="Enter Lastname">
+       </div>
+
+          <div class="form-group">
+       	<input type="name" name="email" class="form-control" placeholder="Enter email">
+       </div>
+
+          <div class="form-group">
+       	<input type="name" name="username" class="form-control" placeholder="Enter username">
+       </div>
+    
+	 </div>
+
+	 <div class="col-6">
+           <div class="form-group">
+           <label>Assign Role</label>
+           <select name="role" class="form-control w-50 d-inline-block">
+           	<option value="1" selected>Not Selected</option>
+           	<option value="2">Admin</option>
+           	<option value="3">User</option>
+           	<option value="4">Manager</option>
+           </select>
+       </div>
+
+          <div class="form-group">
+           <label>Enter Password</label>
+           <input type="password" name="password" class="form-control w-50 d-inline-block">
+          
+       </div>
+          <div class="form-group">
+           <label>Confirm Password</label>
+           <input type="password" name="password" class="form-control w-50 d-inline-block">
+          
+       </div>
+
+             <div class="form-group">
+     
+           <button type="type
+           button" name="submit" class="btn btn-success w-100 p-2">Register</button>
+            </div>
+	 </div>
+</div>
+       </form>
+	</div>
+</div>
+
+<footer class="footer w-100 py-2 text-center">
+	<p>&copy;copyright2019.WEB TECHIE</p>
+</footer>
+</body>
+</html>

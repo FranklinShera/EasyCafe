@@ -246,3 +246,36 @@ footer {
 }
 
 /*.......END OF FOOTER STYLES........*/
+
+
+
+/*.........Add User Styles.........*/
+
+
+
+	#adduser {
+		margin-bottom: 80px;
+	}
+#adduser .card{
+	background-color: #D1D1D1;
+	box-shadow: 2px 2px 5px rgba(0,0,0,.6);
+	letter-spacing: 1px;
+}
+#adduser  .round_image {
+	width:150px;
+	height:150px;
+	border-radius: 50%;
+	background:white;
+	margin:0px auto;
+
+}
+
+#adduser .btn-success {
+	background-color: #9A1F41 !important;
+	border:none !important;
+	width:80px;
+}
+
+
+/*
+.........End of Add user styles............*/
