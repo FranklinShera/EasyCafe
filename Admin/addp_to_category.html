@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="../bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="fon/css/all.css">
+	 <link rel="stylesheet" href="Circular/font.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+
+	<title>EasyCafe Admin</title>
+	<style type="text/css">
+	#addp_category {
+		margin-bottom: 155px;
+	}
+#addp_category .h3{
+	color:#242424 !important;
+	text-shadow:1px 0 5px rgba(0,0,0,.4);
+}
+
+	</style>
+
+</head>
+<body>
+
+
+<nav class="navbar" id="navbar">
+	<h1>EasyCafe</h1>
+
+	<p class="navbar-right"><span class="fa fa fa-user fa-2x"></span> Kiprono</p>
+</nav>
+
+<div class="row">
+	<div class="col-3">
+		<div class="card navigation mt-3 ml-2">
+			<div class="card-header text-center w-100 "><h2 class="Circular">Navigation</h2></div>
+			<div class="card-body p-0 m-0">
+		<ul class="list-group p-0  w-75" id="navigation_li">
+
+		<li class="list-group-item my-3">Home</li>
+		<li class="list-group-item my-3">Users</li>
+		<li class="list-group-item my-3">Products</li>
+		<li class="list-group-item my-3">Statistics</li>
+		<li class="list-group-item my-3">Promotion</li>
+		</ul>
+
+			</div>
+		</div>
+	</div>
+	<div class="col-9 mt-3 " id="addp_category">
+
+<h3 class="h3 text-center mt-1">Add Product  To Category</h3>
+<form class="w-50 mx-auto mt-5">
+	<div class="form-group">
+		<label>Type Product Name</label>
+		<div class="input-group">
+
+		<div class="input-group-prepend">
+			<span class="input-group-text"><i class="fa fa-coffee"></i></span>
+		</div>
+		<input type="text" class="form-control" name="product">
+		</div>
+		</div>
+
+			<div class="form-group">
+		<label>Type Product Price</label>
+		<div class="input-group">
+
+		<div class="input-group-prepend">
+			<span class="input-group-text"><i class="fa fa-dollar-sign "></i></span>
+		</div>
+		<input type="text" class="form-control" name="price">
+		</div>
+		</div>
+
+
+			<div class="form-group">
+		<label>Select category</label>
+		<div class="input-group">
+
+		<div class="input-group-prepend">
+			<span class="input-group-text"><i>Choose</i></span>
+		</div>
+		<select name="select" class="form-control">
+			<option value="1">Main Meals</option>
+			<option value="1">Drinks</option>
+			<option value="1">Beverages</option>
+			<option value="1">Others</option>
+		</select>
+		</div>
+		</div>
+
+		<div class="form-group">
+			<button class="btn btn-success w-100" name="submit">Add <span class="fa fa-plus-square "></span></button>
+		</div>
+</form>
+	</div>
+</div>
+
+<footer class="footer w-100 py-2 text-center">
+	<p>&copy;copyright2019.WEB TECHIE</p>
+</footer>
+</body>
+
+</html>
