@@ -294,3 +294,43 @@ footer {
 
 
 /*....end of add product to category styles.......*/
+
+
+/*.....start of Promotion page styles........
+*/
+	#allpromotion .card{
+		background-color: #6E16A2;
+		color:white;
+		box-shadow: 1px 0 5px rgba(0,0,0,.6);
+	}
+	#allpromotion .table tr td:nth-child(odd) {
+background-color: #D9CDCD;
+	}
+
+
+/*....end of promotion page styles..........*/
+
+
+/*......all transaction...............*/
+
+	#alltransaction .round  {
+	width:120px;
+	height:120px;
+	border-radius: 50%;
+	display:flex !important;
+	justify-content: center;
+	align-items: center;
+	border:4px solid #AE4C67;
+	}
+#alltransaction .card2 {
+	background-color: #EBEBEB;
+	box-shadow: 1px 0 5px rgba(0,0,0,.3);
+	color:#9A1F41;
+}
+#alltransaction .table tr td:nth-child(odd) {
+background-color: #D9CDCD;
+	}
+
+
+
+/*.......end of transaction styles.....*/
