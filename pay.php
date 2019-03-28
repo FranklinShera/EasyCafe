@@ -16,7 +16,7 @@
 
  $url1=$row['url'];
 function sendpayment($phone,$amount,$url1){
-
+$proxy = 'http://proxy.must-lan.ac.ke@10.10.255.254:8080';
 //access token
 
 $consumerkey='hMgQoKy9sbF9fi4ZLz9hXJ3u7aYT3tnR';
@@ -28,6 +28,7 @@ $accesstoken_url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type
 
 $curl=curl_init($accesstoken_url);
 curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_PROXY, $proxy);
 curl_setopt($curl,CURLOPT_RETURNTRANSFER, TRUE);
 curl_setopt($curl,CURLOPT_HEADER, false);
 curl_setopt($curl,CURLOPT_USERPWD, $consumerkey.':'.$consumersecret);
@@ -81,7 +82,7 @@ $curl_post_data = array(
 );
 
 $data_string = json_encode($curl_post_data);
-
+curl_setopt($curl, CURLOPT_PROXY, $proxy);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_POST, true);
 curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
