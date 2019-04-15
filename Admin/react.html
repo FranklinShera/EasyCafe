@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="fon/css/all.css">
+	 <link rel="stylesheet" href="Circular/font.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
 	<title></title>
+	<style type="text/css">
+		img {
+			width:100px !important;
+			height:100px !important;
+		}
+	</style>
 </head>
 <body>
 <div id="root"></div>
 <script src="react.js"></script>
 <script src="react-dom.js"></script>
 
-<script>
-class Hello extends React.Component {
-  render() {
-    return React.createElement('div', null, `Hello ${this.props.toWhat}`);
-  }
-}
-
-ReactDOM.render(
-  React.createElement(Hello, {toWhat: 'World'}, null),
-  document.getElementById('root')
-);
-</script>
+<script src="reacttesting.js"></script>
 </body>
 </html>

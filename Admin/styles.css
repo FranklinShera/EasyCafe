@@ -105,7 +105,7 @@ h1 {
 
 /*.......BEGIN USERS PAGE STYLES........*/
 
-#user-body .card-deck .card img{
+#user-body .card-deck .card-img-top{
 	width:150px !important;
 	height:150px !important;
 	margin: auto !important;
