@@ -77,7 +77,7 @@ class CreatePromo extends React.Component {
   }
 }
 
-const Final=()=> {
+const PromotionB=()=> {
   return(
     e("div",{className:"row"},
         e(PromoDiv),
@@ -85,4 +85,4 @@ const Final=()=> {
       )
     )
 }
-ReactDOM.render(e(Final),document.querySelector("#promotion"))
+ReactDOM.render(e(PromotionB),document.querySelector("#promotion"))

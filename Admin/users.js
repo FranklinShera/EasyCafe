@@ -93,4 +93,5 @@ class User extends React.Component {
     }
 }
 
-ReactDOM.render(e(User),document.querySelector("#user-body"))
+
+//ReactDOM.render(e(User),document.querySelector("#user-body"))
