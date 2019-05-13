@@ -16,7 +16,7 @@
 
  $url1=$row['url'];
 function sendpayment($phone,$amount,$url1){
-$proxy = 'http://proxy.must-lan.ac.ke@10.10.255.254:8080';
+$proxy = '';
 //access token
 
 $consumerkey='hMgQoKy9sbF9fi4ZLz9hXJ3u7aYT3tnR';

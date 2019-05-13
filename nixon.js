@@ -1,0 +1,10 @@
+var prtContent = document.getElementById("order-to-print");
+var WinPrint = window.open('', '', 'left=0,top=0,width=384,height=900,toolbar=0,scrollbars=0,status=0');
+WinPrint.document.write('<html><head>');
+WinPrint.document.write('<link rel="stylesheet" href="assets/css/print/normalize.css">');
+WinPrint.document.write('<link rel="stylesheet" href="assets/css/print/receipt.css">');
+WinPrint.document.write('</head><body onload="print();close();">');
+WinPrint.document.write(prtContent.innerHTML);
+WinPrint.document.write('</body></html>');
+WinPrint.document.close();
+WinPrint.focus();

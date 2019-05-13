@@ -39,7 +39,7 @@
 		</div>
 	</div>
 	<div class="col-9 mt-3 " id="statistic">
-		<div class="row">
+	<!-- 	<div class="row">
 			<div class="col-md-4">
 				<div class="stat_container text-center mt-2">
 				<div class="card round" id="stat_sales">
@@ -93,7 +93,7 @@
 	
 </canvas>
 			</div>
-		</div>
+		</div> -->
 
 	</div>
 </div>
@@ -104,31 +104,7 @@
 </footer>
 
 
-<script type="text/javascript">
-//get canvas
-	var canvas=document.querySelector("#canvas");
-	//get context
-	var context=canvas.getContext("2d");
-var values=['10','100','300','320','10','100','350'];
-	//declare constant width
-	var width=60;
-	var X=0;//starting x-axis position
-	var colors=['#811',"#6E16A2",'#811',"#6E16A2",'#811',"#6E16A2",'#811'];
-	context.fillStyle="#811";
-	for (var i = 0; i < values.length; i++) {
-		
-			context.fillStyle=colors[i];
-		
-		var h=values[i];
-		//draw
-		context.fillRect(X,canvas.height-h,width,h);
 
-		X+=width+1;
-	}
-
-		
-
-</script>
 	<script type="text/javascript" src="../jquery.min.js"></script>
 
 		<script type="text/javascript" src="../bootstrap.min.js"></script>
@@ -137,5 +113,6 @@ var values=['10','100','300','320','10','100','350'];
 		<script src="react-dom.js"></script>
 
 		<script src="app.js"></script>
+		<script src="statistic.js"></script>
 </body>
 </html>
