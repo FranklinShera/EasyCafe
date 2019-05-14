@@ -506,9 +506,10 @@ class Nav extends React.Component {
 ReactDOM.render(React.createElement(Nav),document.querySelector("#nav_root"));
 
 const List=(props)=>{
+	//console.log(props);
 	return (
-		e("li",{className:"list-group-item my-3"},
-   e("a",{href:props.attr},props.name)
+		e("li",{className:"list-group-item my-3",id:props.id,onClick:props.click()},
+   props.name
 		))
 }
 //this is sideBar
@@ -516,16 +517,21 @@ class SideBar extends React.Component {
 	constructor(){
 		super();
 		this.state={
-			name:[{name:"Home",attr:"index.html"},
-			{name:"Users",attr:"users.html"},
-			{name:"Products",attr:"products.html"},
-			{name:"Statistics",attr:"statistics.html"},
-			{name:"Promotion",attr:"promotion.html"}]
+			name:[{name:"Home",id:"1"},
+			{name:"Users",id:"2"},
+			{name:"Products",id:"3"},
+			{name:"Statistics",id:"4"},
+			{name:"Promotion",id:"5"}]
 		}
 	}
 
 
 	render(){
+	const changing=(e)=> {
+		//console.log(e.target.id)
+		this.props.change(e.target.id)
+		
+	}
 		return(
          e("div",{className:"card navigation mt-3 ml-2"},
            	e("div",{className:"card-header text-center w-100 "},
@@ -534,7 +540,7 @@ class SideBar extends React.Component {
            	e("div",{className:"card-body p-0 m-0"},
                e("ul",{className:"list-group p-0  w-75",id:"navigation_li"},
                	this.state.name.map(name=>{
-               return(e(List,{name:name.name,key:name.name,attr:name.attr}));	
+               return(e(List,{name:name.name,key:name.id,id:name.id,click:()=>changing}));	
                	})
             
                	)
@@ -543,8 +549,9 @@ class SideBar extends React.Component {
          	)
 			)
 	}
-}
-ReactDOM.render(React.createElement(SideBar),document.querySelector("#sideBar"));
+	}
+
+//ReactDOM.render(React.createElement(SideBar),document.querySelector("#sideBar"));
 
 //this is the first row
 class FirstRow extends React.Component {
@@ -674,13 +681,17 @@ const home2=()=>{
  		}
  	}
 
- 	componentDidMount() {
- 		setTimeout(()=>{
-   this.setState({which:5})
- 		},3000)
- 	}
+ 	// componentDidMount() {
+ 	// 	setTimeout(()=>{
+  //  this.setState({which:5})
+ 	// 	},3000)
+ 	// }
 
  	render() {
+const Update=(item)=> {
+	
+	this.setState({which:parseInt(item)})
+}
  const switchhandler=(data)=> {
 
 
@@ -697,7 +708,7 @@ const home2=()=>{
         	case 4:console.log("Iam the third and default");
         	return(e(Statisctic))
         	break;
-        	case 5:console.log("Iam the third and default");
+        	case 5:
         	return(e(PromotionB))
         	break;
         	default:
@@ -706,12 +717,17 @@ const home2=()=>{
         }
 }
 
-return switchhandler(this.state.which);
+return (e("div",{className:"container-fluid d-flex"},
+   e("div",{className:"col-3",id:"sideBar"},e(SideBar,{change:Update})),
+   e("div",{className:"col-9 mt-3",id:"body"},switchhandler(this.state.which))
+	)
+	
+	);
         }
 
  	}
  
-ReactDOM.render(e(App),document.querySelector("#body"))
+ReactDOM.render(e(App),document.querySelector("#index_body"))
 
 
 //ReactDOM.render(React.createElement(Body),document.querySelector("#body"));
