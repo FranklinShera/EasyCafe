@@ -1,6 +1,193 @@
 const e=React.createElement;
 //users section
+//add user subsection
+class UserComponent extends React.Component {
 
+ constructor(props) {
+    super(props);
+    this.state={
+    data:""
+    }
+
+ } 
+componentDidMount(){
+  let user=this.props.prop;
+ 
+ $.ajax({
+   Method:'POST',
+   url:'user.php',
+   data:{id:user}
+ }).then(data=>{
+this.setState({data:JSON.parse(data)});
+ })
+
+
+
+ //   fetch("http://localhost/Denis/Admin/user.php")
+ //   .then(response=>response.json())
+ //   .then(data=>{
+ // this.setState({data:data});
+ //   })
+ }
+//get the email
+
+getfile(e) {
+console.log(e.target.value);
+}
+postdata(e) {
+  let value=e.target.value;
+ let column=e.target.getAttribute("name")
+ let id=this.props.prop;
+
+//post this to the database
+$.post("edit_user.php",{value:value,column:column,id:id})
+.done(function(res){
+
+
+if(!res) {
+ // console.log("empty");
+}else {
+ //create icon element
+  var icon=document.createElement("span");
+     
+//create Div
+var div=document.createElement("div");
+
+//give id to the div
+div.id="toast";
+
+//give it a classname
+div.className="card show bg-success border border-info ";
+var msg=res;
+
+//create textNode
+var text=document.createTextNode(msg);
+
+//add text element to the div
+div.appendChild(icon);
+div.appendChild(text);
+
+//append the div to the document
+document.body.appendChild(div);
+
+setTimeout(function(){
+
+  div.className=div.className.replace("show","");
+
+  div.parentNode.removeChild(div);
+},3000)
+
+}
+
+})
+}
+
+
+ render() {
+
+  const {title:title, btntitle:btntitle}=this.props;
+
+const { id,username,firstname,lastname,email,role,image }=this.state.data;
+
+if(role=="user") {
+var  active=2
+}
+    return(
+  e("form",{className:"w-100"},
+//first div
+e("div",{className:"card w-75 mx-auto text-center p-2 cadduser"},
+        e("h2",{className:"h3"},title)),
+//the second div
+  e("div",{className:"row mt-3 mx-auto"},
+         e("div",{className:"col-6"},e("div",{className:"round_image_user"},
+      e("img",{src:image,height:"150px", width:"150px",className:"round_image_user"})
+          )),
+         e("div",{className:"col-6"},
+            e("input",{className:"btn btn-success mt-5 w-auto",type:"file",id:"upload_img",onChange:(e)=>this.getfile(e)})
+                )
+         ),//end of row
+  //the third div
+  e("div",{className:"row text-center mx-auto w-100 mt-3"},
+    e("div",{className:"col-6"},
+   e("div",{className:"form-group"},
+   e("input",
+    {type:"text",
+     name:"firstname",
+     className:"form-control",
+     onBlur:(e)=>this.postdata(e),
+
+    placeholder:firstname})
+    ),
+   //last name
+     e("div",{className:"form-group"},
+   e("input",
+    {type:"text",
+     name:"lastname",
+     className:"form-control",
+     onBlur:(e)=>this.postdata(e),
+     placeholder:lastname})
+    ),
+       e("div",{className:"form-group"},
+   e("input",
+    {type:"text",
+     name:"email",
+     className:"form-control",
+     onBlur:(e)=>this.postdata(e),
+     placeholder:email})
+    ),
+    e("div",{className:"form-group"},
+   e("input",
+    {type:"text",
+     name:"username",
+     className:"form-control",
+     onBlur:(e)=>this.postdata(e),
+     placeholder:username})
+    )
+        ),
+     e("div",{className:"col-6"},
+      e("div",{className:"form-group"},
+      e("label",null,"Assign New Role"),
+        e("select",{
+            name:"role",
+            className:"form-control w-50 d-inline-block",
+            onChange:(e)=>this.postdata(e),
+            defaultValue:active !=undefined?active:0
+        },
+            e("option",{value:"0"},"Not Selected"),
+            e("option",{value:"1"},"Admin"),
+            e("option",{value:"2"},"User"),
+            e("option",{value:"3"},"Manager")
+        )//end select
+    ),
+      //password
+         e("div",{className:"form-group"},
+   e("input",
+    {type:"password",
+     name:"password",
+     className:"form-control",
+     onBlur:(e)=>this.postdata(e),
+     placeholder:"Enter new password"
+})
+    ),
+  
+         //submit
+ e("div",{className:"form-group"},
+   e("button",
+    {type:"button",
+     name:"submit",
+     className:"btn btn-success w-100 p-2"
+     },btntitle)
+    )
+
+        )
+    )
+  )
+        )
+    
+  
+ }  
+}
+ //end add user subsection
 
 class User extends React.Component {
     constructor() {
@@ -61,7 +248,7 @@ componentDidMount() {
                     )
               }),
               e("li",{},e("a",{href:"#",className:"btn btn-danger float-right m-2"},"Delete"),
-                e("a",{href:"#",className:"btn btn-success float-left m-2",onClick:()=>this.props.click(6)},"Edit")
+                e("a",{href:"#",id:item.id,className:"btn btn-success float-left m-2",onClick:(e)=>this.props.click(6,e.target.id)},"Edit")
                 ),
               
               )
@@ -549,7 +736,7 @@ class FirstRow extends React.Component {
 			{id:"sales",qty:data.sales,desc:"Today's Total Sales"}]
 		})
 
-		console.log(this.state);
+
 		 })
 	}
 	render(){
@@ -652,7 +839,8 @@ const home2=()=>{
  	constructor() {
  		super();
  		this.state={
- 			which:1
+ 			which:1,
+      data:""
  		}
  	}
 
@@ -663,9 +851,9 @@ const home2=()=>{
  	// }
 
  	render() {
-const Update=(item)=> {
+const Update=(item,prop="")=> {
 	
-	this.setState({which:parseInt(item)})
+	this.setState({which:parseInt(item),data:prop})
 }
  const switchhandler=(data)=> {
 
@@ -677,17 +865,17 @@ const Update=(item)=> {
         	case 2:
         	return(e(User,{click:Update}))
         	break;
-        	case 3:console.log("Iam the third and default");
+        	case 3:
         	return(e(Product))
         	break;
-        	case 4:console.log("Iam the third and default");
+        	case 4:
         	return(e(Statisctic))
         	break;
         	case 5:
         	return(e(PromotionB))
         	break;
           case 6:
-          return(e("div",null,"Hallo world"))
+          return(e(UserComponent,{prop:this.state.data,title:"EDIT USER",btntitle:"Save"}))
           break;
         	default:
         	 return(e(Body))

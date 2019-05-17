@@ -259,12 +259,12 @@ footer {
 	#adduser {
 		margin-bottom: 80px;
 	}
-#adduser .card{
+/* .cadduser{
 	background-color: #D1D1D1;
 	box-shadow: 2px 2px 5px rgba(0,0,0,.6);
 	letter-spacing: 1px;
-}
-#adduser  .round_image {
+}*/
+ .round_image_user {
 	width:150px;
 	height:150px;
 	border-radius: 50%;
@@ -337,3 +337,37 @@ background-color: #D9CDCD;
 
 
 /*.......end of transaction styles.....*/
+
+#toast {
+			visibility:hidden;
+			min-width: 300px;
+			margin-left: -635px;
+			background-color: #811;
+			color:#fff;
+			text-align: center;
+			border-radius: 2px;
+			padding: 15px;
+			position:fixed;
+			left:50%;
+			bottom: 30px;
+			font-size:16px;
+		}
+
+	#toast.show {
+		visibility: visible;
+		animation: fadeIn 0.5s, fadeout 0.5s 2.5s;
+	}
+
+	@keyframes fadeIn {
+		from {bottom:0px; opacity:0;}
+
+		to{bottom:30px; opacity: 1}
+
+	}
+
+	@keyframes fadeout {
+		from {bottom:30px; opacity: 1;}
+
+		to{bottom:0px; opacity:0;}
+		
+	}

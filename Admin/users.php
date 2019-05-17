@@ -116,7 +116,7 @@ $data=[
 
 	foreach($users as $user) {
 		$data['id']=$user['id'];
-		$data['image']="images/user.jpg";
+		$data['image']=$user['image'];
 	   $data['data']=details($user);
 	   array_push($all, $data);
 	}
