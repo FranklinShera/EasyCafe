@@ -16,7 +16,7 @@ if($compare[$column]!=$value) {
 if($result) {
   echo "Edited $column successfully";
 }else {
-  echo "Fail";
+  echo "Username already taken";
 }
 
 }else {

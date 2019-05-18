@@ -60,7 +60,7 @@ $data=[
 
 	$sql="SELECT * , (select count(*) FROM customers where server_id=users.id) as total,(SELECT login FROM `user_logs` WHERE id=(SELECT MAX(id) FROM user_logs WHERE user_id=users.id)) as lastLogin FROM users";
 	$result=$con->query($sql);
-	if($row=$result->fetch_assoc()) {
+	while($row=$result->fetch_assoc()) {
 		$users[]=$row;
 	}
 
@@ -115,6 +115,8 @@ $data=[
 	}
 
 	foreach($users as $user) {
+	
+
 		$data['id']=$user['id'];
 		$data['image']=$user['image'];
 	   $data['data']=details($user);

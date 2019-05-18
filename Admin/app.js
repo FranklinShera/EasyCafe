@@ -14,10 +14,11 @@ componentDidMount(){
   let user=this.props.prop;
  
  $.ajax({
-   Method:'POST',
+   Method:'GET',
    url:'user.php',
-   data:{id:user}
+   data:{id:parseInt(user)}
  }).then(data=>{
+
 this.setState({data:JSON.parse(data)});
  })
 
@@ -34,12 +35,106 @@ this.setState({data:JSON.parse(data)});
 getfile(e) {
 console.log(e.target.value);
 }
+//validation function
+validate(value,column) {
+  if(value=="") {
+    
+    return false
+  }
+ return true;
+}//
+toast(msg) {
+ //create icon element
+  var icon=document.createElement("span");
+     
+//create Div
+var div=document.createElement("div");
+
+//give id to the div
+div.id="toast";
+
+//give it a classname
+div.className="card show bg-success border border-info ";
+var msg=msg;
+
+//create textNode
+var text=document.createTextNode(msg);
+
+//add text element to the div
+div.appendChild(icon);
+div.appendChild(text);
+
+//append the div to the document
+document.body.appendChild(div);
+
+setTimeout(function(){
+
+  div.className=div.className.replace("show","");
+
+  div.parentNode.removeChild(div);
+},3000)
+
+
+}
+postdata1(e) {
+
+   
+
+
+
+
+//get firstname
+
+
+
+let firstname=$("#firstname").val();
+let lastname=$("#lastname").val();
+let email=$("#email").val();
+let username=$("#username").val();
+let role=$("#role").val();
+let password=$("#password").val();
+
+ //send the data
+  $.ajax({
+   Method:'GET',
+   url:'add_user.php',
+   data:{firstname:firstname,
+ lastname:lastname,
+ email:email,
+ username:username,
+ role:role,
+ password:password
+
+   }
+ }).done((res)=> {
+   this.toast(res)
+ })
+ 
+
+
+
+  
+
+
+
+}
+
+
+
+
+
+
 postdata(e) {
-  let value=e.target.value;
+  let btn=$("#submit").text();
+    let value=e.target.value;
  let column=e.target.getAttribute("name")
  let id=this.props.prop;
+  if(btn!="Add") {
+  this.toast("Update  Successful")
 
-//post this to the database
+let validated=this.validate(value,column);
+if(validated) {
+  //post this to the database
 $.post("edit_user.php",{value:value,column:column,id:id})
 .done(function(res){
 
@@ -82,6 +177,14 @@ setTimeout(function(){
 })
 }
 
+  }
+
+
+
+
+
+}
+
 
  render() {
 
@@ -110,9 +213,11 @@ e("div",{className:"card w-75 mx-auto text-center p-2 cadduser"},
   e("div",{className:"row text-center mx-auto w-100 mt-3"},
     e("div",{className:"col-6"},
    e("div",{className:"form-group"},
+    e("label",null,"Your Firstname:"),
    e("input",
     {type:"text",
      name:"firstname",
+     id:"firstname",
      className:"form-control",
      onBlur:(e)=>this.postdata(e),
 
@@ -120,25 +225,31 @@ e("div",{className:"card w-75 mx-auto text-center p-2 cadduser"},
     ),
    //last name
      e("div",{className:"form-group"},
+      e("label",null,"Your Lastname:"),
    e("input",
     {type:"text",
      name:"lastname",
+     id:"lastname",
      className:"form-control",
      onBlur:(e)=>this.postdata(e),
      placeholder:lastname})
     ),
        e("div",{className:"form-group"},
+        e("label",null,"Your Email:"),
    e("input",
     {type:"text",
      name:"email",
+     id:"email",
      className:"form-control",
      onBlur:(e)=>this.postdata(e),
      placeholder:email})
     ),
     e("div",{className:"form-group"},
+      e("label",null," Your username:"),
    e("input",
     {type:"text",
      name:"username",
+     id:"username",
      className:"form-control",
      onBlur:(e)=>this.postdata(e),
      placeholder:username})
@@ -149,11 +260,12 @@ e("div",{className:"card w-75 mx-auto text-center p-2 cadduser"},
       e("label",null,"Assign New Role"),
         e("select",{
             name:"role",
+            id:"role",
             className:"form-control w-50 d-inline-block",
             onChange:(e)=>this.postdata(e),
-            defaultValue:active !=undefined?active:0
+            defaultValue:active !=undefined?active:""
         },
-            e("option",{value:"0"},"Not Selected"),
+            e("option",{value:""},"Not Selected"),
             e("option",{value:"1"},"Admin"),
             e("option",{value:"2"},"User"),
             e("option",{value:"3"},"Manager")
@@ -163,6 +275,7 @@ e("div",{className:"card w-75 mx-auto text-center p-2 cadduser"},
          e("div",{className:"form-group"},
    e("input",
     {type:"password",
+    id:"password",
      name:"password",
      className:"form-control",
      onBlur:(e)=>this.postdata(e),
@@ -175,7 +288,10 @@ e("div",{className:"card w-75 mx-auto text-center p-2 cadduser"},
    e("button",
     {type:"button",
      name:"submit",
+     id:"submit",
+     onClick:(e)=>this.postdata1(e),
      className:"btn btn-success w-100 p-2"
+     
      },btntitle)
     )
 
@@ -229,13 +345,78 @@ componentDidMount() {
 
    })
 }
+
+toast(msg) {
+ //create icon element
+  var icon=document.createElement("span");
+     
+//create Div
+var div=document.createElement("div");
+
+//give id to the div
+div.id="toast";
+
+//give it a classname
+div.className="card show bg-success border border-info ";
+var msg=msg;
+
+//create textNode
+var text=document.createTextNode(msg);
+
+//add text element to the div
+div.appendChild(icon);
+div.appendChild(text);
+
+//append the div to the document
+document.body.appendChild(div);
+
+setTimeout(function(){
+
+  div.className=div.className.replace("show","");
+
+  div.parentNode.removeChild(div);
+},3000)
+
+
+}
+
+
+deleteHandler(e) {
+ let id=e.target.id;
+ let realState=this.state;
+let newstate=realState.data.filter(item=>{
+  if(item.id!=id) {
+return item;
+  }
+
+
+});
+
+ $.ajax({
+   Method:'GET',
+   url:'delete_user.php',
+   data:{id:id}
+ }).done((res)=>{
+   if(res==1) {
+realState.data=newstate;
+this.setState(realState);
+this.toast("Successfully Deleted");
+   }else {
+    this.toast("Failed to deleted");
+   }
+ })
+
+
+
+}
     render(){
 
       return(
           e("div",{className:"deck mx-2 text-center "},
+            e("span",{className:"btn btn-primary ml-0",onClick:(e)=>this.props.click(7,e.target.id)},"Add new User"),
 
              this.state.data.map(item=>{
-          return  e("div",{className:"card col-md-4 mx-auto",key:item.id},
+          return  e("div",{className:"card col-md-4 mx-auto d-inline-block m-2",key:item.id},
 
            e("img",{src:item.image,className:"card-img-top user_card"}),
            e("div",{className:"card-body mt-3 px-0",style:{backgroundColor:"white !importart",border:"none !important"}},
@@ -247,7 +428,7 @@ componentDidMount() {
                             e("span",{style:data.style},data.value)
                     )
               }),
-              e("li",{},e("a",{href:"#",className:"btn btn-danger float-right m-2"},"Delete"),
+              e("li",{},e("a",{href:"#",id:item.id,onClick:(e)=>this.deleteHandler(e),className:"btn btn-danger float-right m-2"},"Delete"),
                 e("a",{href:"#",id:item.id,className:"btn btn-success float-left m-2",onClick:(e)=>this.props.click(6,e.target.id)},"Edit")
                 ),
               
@@ -876,6 +1057,9 @@ const Update=(item,prop="")=> {
         	break;
           case 6:
           return(e(UserComponent,{prop:this.state.data,title:"EDIT USER",btntitle:"Save"}))
+          break;
+            case 7:
+          return(e(UserComponent,{prop:this.state.data,title:"Add User",btntitle:"Add"}))
           break;
         	default:
         	 return(e(Body))
