@@ -8,7 +8,13 @@ $email=$_GET['email'];
 $username=$_GET['username'];
 $role=$_GET['role'];
 $password=$_GET['password'];
-
+//first select where username is the username
+$sql="SELECT * FROM users WHERE username='$username'";
+$present=$con->query($sql)->num_rows;
+if($present>0) {
+	echo "username already taken";
+	exit;
+}
 
 $sql="INSERT INTO `users`( `username`, `firstname`, `lastname`, `email`, `role`, `password`) VALUES ('$username','$firstname','$lastname','$email','$role','$password')";
 

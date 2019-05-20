@@ -76,6 +76,23 @@ setTimeout(function(){
 
 
 }
+
+//function to validate inputs
+validateInput(item,name,min,max) {
+if(item.length=="") {
+this.toast(name+"is required");
+return false;
+}else if(item.length<min) {
+  this.toast(name+"should be more than"+min+"characters")
+
+  return false;
+}else if(item.length>max) {
+   this.toast(name+"should less than"+max+"characters")
+   return false;
+}else {
+  return item;
+}
+}
 postdata1(e) {
 
    
@@ -87,14 +104,16 @@ postdata1(e) {
 
 
 
-let firstname=$("#firstname").val();
-let lastname=$("#lastname").val();
-let email=$("#email").val();
-let username=$("#username").val();
-let role=$("#role").val();
-let password=$("#password").val();
+let firstname=this.validateInput($("#firstname").val(),"Firstname",2,30);
+let lastname=this.validateInput($("#lastname").val(),"Lastname",2,30);
+let email=this.validateInput($("#email").val(),"Email",7,30);
+let username=this.validateInput($("#username").val(),"Username",2,10);
+let role=this.validateInput($("#role").val(),"Role",1,1);
+let password=this.validateInput($("#password").val(),"password",4,14);
+ 
 
- //send the data
+ if(firstname&&lastname&&email&&username&&role&&password) {
+   //send the data
   $.ajax({
    Method:'GET',
    url:'add_user.php',
@@ -109,6 +128,11 @@ let password=$("#password").val();
  }).done((res)=> {
    this.toast(res)
  })
+
+ }else {
+  alert("something went wrong");
+ }
+
  
 
 
@@ -196,7 +220,7 @@ if(role=="user") {
 var  active=2
 }
     return(
-  e("form",{className:"w-100"},
+  e("div",{className:"w-100"},
 //first div
 e("div",{className:"card w-75 mx-auto text-center p-2 cadduser"},
         e("h2",{className:"h3"},title)),
@@ -206,7 +230,12 @@ e("div",{className:"card w-75 mx-auto text-center p-2 cadduser"},
       e("img",{src:image,height:"150px", width:"150px",className:"round_image_user"})
           )),
          e("div",{className:"col-6"},
-            e("input",{className:"btn btn-success mt-5 w-auto",type:"file",id:"upload_img",onChange:(e)=>this.getfile(e)})
+          e("form",{action:"upload.php",id:"form",method:"POST",enctype:"multipart/form-data", target:"iframe"},
+              e("input",{className:"btn btn-success mt-5 w-auto",type:"file",id:"upload_img",onChange:(e)=>this.getfile(e)}),
+              e("input",{type:"submit",name:"submit",value:"submit"})
+            ),
+          e("iframe",{name:"iframe"})
+          
                 )
          ),//end of row
   //the third div
