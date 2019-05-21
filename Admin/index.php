@@ -1,3 +1,12 @@
+<?php
+
+require '../session_start.php';
+if(!isset($_SESSION['server'])) {
+
+	header("location: ../login.php");
+} 
+ ?>
+
 <!DOCTYPE html>
 <html>
 <head>

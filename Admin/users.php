@@ -1,4 +1,9 @@
 <?php
+
+require '../session_start.php';
+
+
+
 include_once '../connection.php';
 
 $all=[];
@@ -58,7 +63,7 @@ $data=[
 
 //echo json_encode($data);
 
-	$sql="SELECT * , (select count(*) FROM customers where server_id=users.id) as total,(SELECT login FROM `user_logs` WHERE id=(SELECT MAX(id) FROM user_logs WHERE user_id=users.id)) as lastLogin FROM users";
+	$sql="SELECT * ,(select role FROM roles WHERE id=users.role) as rolename, (select count(*) FROM customers where server_id=users.id) as total,(SELECT login FROM `user_logs` WHERE id=(SELECT MAX(id) FROM user_logs WHERE user_id=users.id)) as lastLogin FROM users";
 	$result=$con->query($sql);
 	while($row=$result->fetch_assoc()) {
 		$users[]=$row;
@@ -84,8 +89,8 @@ $data=[
 
 	//STATUS 
 
-	if(isset($_SESSION['username'])) {
-		$status=$_SESSION['username']==$user['username']?"Active":"Not Active";
+	if(isset($_SESSION['server'])) {
+		$status=$_SESSION['server']==$user['id']?"Active":"Not Active";
 	}else {
 		$status="NOT ACTIVE";
 	}
@@ -100,7 +105,7 @@ $data=[
 	$result[]=$itemD;
 //ROLE
   $itemR['Name']="Role: ";
-	$itemR['value']=$user['role'];
+	$itemR['value']=$user['rolename'];
 	$itemR['style']=array("color"=>"#BB3131");
 	$result[]=$itemR;
 //last Login

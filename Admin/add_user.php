@@ -7,6 +7,7 @@ $lastname=$_GET['lastname'];
 $email=$_GET['email'];
 $username=$_GET['username'];
 $role=$_GET['role'];
+$image=$_GET['image'];
 $password=$_GET['password'];
 //first select where username is the username
 $sql="SELECT * FROM users WHERE username='$username'";
@@ -16,7 +17,7 @@ if($present>0) {
 	exit;
 }
 
-$sql="INSERT INTO `users`( `username`, `firstname`, `lastname`, `email`, `role`, `password`) VALUES ('$username','$firstname','$lastname','$email','$role','$password')";
+$sql="INSERT INTO `users`( `username`, `firstname`, `lastname`, `email`, `role`,`image`, `password`) VALUES ('$username','$firstname','$lastname','$email','$role','$image','$password')";
 
 $result=$con->query($sql);
 

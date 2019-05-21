@@ -38,7 +38,7 @@ console.log(e.target.value);
 //validation function
 validate(value,column) {
   if(value=="") {
-    
+    this.toast("please enter "+column+" if you want to edit");
     return false
   }
  return true;
@@ -110,19 +110,22 @@ let email=this.validateInput($("#email").val(),"Email",7,30);
 let username=this.validateInput($("#username").val(),"Username",2,10);
 let role=this.validateInput($("#role").val(),"Role",1,1);
 let password=this.validateInput($("#password").val(),"password",4,14);
- 
+ let image=$("#round_image_user").attr("src");
+
 
  if(firstname&&lastname&&email&&username&&role&&password) {
    //send the data
   $.ajax({
    Method:'GET',
    url:'add_user.php',
-   data:{firstname:firstname,
+   data:{
+ firstname:firstname,
  lastname:lastname,
  email:email,
  username:username,
  role:role,
- password:password
+ password:password,
+ image:image
 
    }
  }).done((res)=> {
@@ -145,7 +148,45 @@ let password=this.validateInput($("#password").val(),"password",4,14);
 
 
 
+postdata2(e){
+  //for edit button to search for image
+let image=$("#round_image_user").attr("src");
+ let id=this.props.prop;
+$.post("edit_user.php",{value:image,column:"image",id:id}).done(function(res){
+//create icon element
+  var icon=document.createElement("span");
+     
+//create Div
+var div=document.createElement("div");
 
+//give id to the div
+div.id="toast";
+
+//give it a classname
+div.className="card show bg-success border border-info ";
+var msg=res;
+
+//create textNode
+var text=document.createTextNode(msg);
+
+//add text element to the div
+div.appendChild(icon);
+div.appendChild(text);
+
+//append the div to the document
+document.body.appendChild(div);
+
+setTimeout(function(){
+
+  div.className=div.className.replace("show","");
+
+  div.parentNode.removeChild(div);
+},3000)
+
+
+})
+
+}
 
 
 postdata(e) {
@@ -153,8 +194,9 @@ postdata(e) {
     let value=e.target.value;
  let column=e.target.getAttribute("name")
  let id=this.props.prop;
-  if(btn!="Add") {
-  this.toast("Update  Successful")
+  if(btn!="Add")  {
+
+ // this.toast("Update  Successful")
 
 let validated=this.validate(value,column);
 if(validated) {
@@ -227,14 +269,15 @@ e("div",{className:"card w-75 mx-auto text-center p-2 cadduser"},
 //the second div
   e("div",{className:"row mt-3 mx-auto"},
          e("div",{className:"col-6"},e("div",{className:"round_image_user"},
-      e("img",{src:image,height:"150px", width:"150px",className:"round_image_user"})
+      e("img",{src:image,height:"150px", width:"150px",className:"round_image_user",id:"round_image_user"})
           )),
          e("div",{className:"col-6"},
-          e("form",{action:"upload.php",id:"form",method:"POST",enctype:"multipart/form-data", target:"iframe"},
-              e("input",{className:"btn btn-success mt-5 w-auto",type:"file",id:"upload_img",onChange:(e)=>this.getfile(e)}),
-              e("input",{type:"submit",name:"submit",value:"submit"})
+          e("form",{action:"upload.php",id:"form",method:"post","encType":"multipart/form-data", target:"iframe"},
+              e("input",{name:"file", type:"file",id:"upload_img"}),
+              e("input",{type:"submit",name:"submit",className:"btn btn-primary btn w-50",value:"submit"})
             ),
-          e("iframe",{name:"iframe"})
+          e("iframe",{name:"iframe",style:{display:"none"}}),
+          e("div",{className:"card bg-success text-white",id:"error",style:{display:"none"}},"here is upload log")
           
                 )
          ),//end of row
@@ -318,7 +361,7 @@ e("div",{className:"card w-75 mx-auto text-center p-2 cadduser"},
     {type:"button",
      name:"submit",
      id:"submit",
-     onClick:(e)=>this.postdata1(e),
+     onClick:btntitle=="Add"?(e)=>this.postdata1(e):(e)=>this.postdata2(e),
      className:"btn btn-success w-100 p-2"
      
      },btntitle)
