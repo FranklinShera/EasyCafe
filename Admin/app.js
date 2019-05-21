@@ -901,17 +901,31 @@ class Nav extends React.Component {
 	constructor(){
 		super();
 		this.state={
-			name:"Kiprono",
+			user:{name:"Kiprono",id:"58"}
 
 		}
 	}
   
+  componentDidMount() {
+
+    fetch("http://localhost/Denis/Admin/server.php")
+     .then(response=>response.json())
+     .then(data=>{
+      let chang=this.state;
+      chang.user=data;
+      this.setState(chang);
+      console.log(this.state.user);
+     })
+  }
 	render() {
-		
+		 const {name,id}=this.state.user;
+     const url="http://localhost/Denis/userlogin.php?id="+id;
 			return e("nav",{className:"navbar", id:"navbar"},
         e("h1",null,"EasyCafe"),
+        e("a",{href:"http://localhost/Denis/index.php"},"Home"),
+        e("a",{href:url},"LogOut"),
         e("p",{className:"navbar-right"},
-        	e("span",{className:"fa fa fa-user fa-2x"}),this.state.name) 
+        	e("span",{className:"fa fa fa-user fa-2x"}),name) 
 
 		);
 

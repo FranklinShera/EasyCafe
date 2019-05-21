@@ -97,8 +97,8 @@ require 'loggedin.php';
 
 	<div class="collapse navbar-collapse">
 		<ul class=" navbar-nav ">
-			<li class="nav-item"><a class="nav-link" href="">Home</a></li>
-				<li class="nav-item"><a class="nav-link" href="">Admin</a></li>
+			<li class="nav-item"><a class="nav-link" href="http://localhost/Denis/index.php">Home</a></li>
+				<li class="nav-item"><a class="nav-link" href="http://localhost/Denis/Admin/index.php">Admin</a></li>
 				<li class="nav-item"><a class="nav-link bg-primary text-white" href="userlogin.php?id=<?php echo $_SESSION['server'] ?>">Log out</a></li>
 
 	
