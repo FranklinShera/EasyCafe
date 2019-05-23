@@ -176,6 +176,18 @@ h1 {
 #product-table1 .fa-edit ,#product-table1 .fa-trash {
 	font-size:18px;
 }
+	#addcategory {
+		margin-bottom: 200px !important;
+	}
+	#addcategory .card {
+		background-color: #B6B6B6;
+		box-shadow: -1px 2px 8px rgba(154,31,65,.4);
+	}
+
+.hover:hover {
+	font-size: 26px !important;
+	color:white !important;
+}
 
 
 /*.....END PRODUCTS STYLES..........*/

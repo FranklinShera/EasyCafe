@@ -7,7 +7,7 @@ $tabledata=[];
 
 
 //select all cagegories
-$sql="SELECT * FROM `categories`";
+$sql="SELECT * FROM `categories` WHERE id IN (SELECT category FROM products)";
 $result=$con->query($sql);
 
 while($row=$result->fetch_assoc()){

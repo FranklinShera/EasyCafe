@@ -1,6 +1,40 @@
 const e=React.createElement;
 //users section
 //add user subsection
+
+function toast(msg) {
+ //create icon element
+  var icon=document.createElement("span");
+     
+//create Div
+var div=document.createElement("div");
+
+//give id to the div
+div.id="toast";
+
+//give it a classname
+div.className="card show bg-success border border-info ";
+var msg=msg;
+
+//create textNode
+var text=document.createTextNode(msg);
+
+//add text element to the div
+div.appendChild(icon);
+div.appendChild(text);
+
+//append the div to the document
+document.body.appendChild(div);
+
+setTimeout(function(){
+
+  div.className=div.className.replace("show","");
+
+  div.parentNode.removeChild(div);
+},3000)
+
+
+}
 class UserComponent extends React.Component {
 
  constructor(props) {
@@ -527,6 +561,7 @@ const Products=(props)=> {
        e("table",{className:"w-100"},
          e("tr",null,
            e("td",null,
+            e("span",{className:"badge badge-primary float-right p-2 bg-success",onClick:()=>props.click(9)},"Create Product"),
             e("h4",null,"PRODUCT LIST")
            	),
          e("td",null,
@@ -554,8 +589,8 @@ const Products=(props)=> {
                e("td",null,item.name),
                e("td",null,"20"),
                e("td",null,
-                 e("span",{className:"text-primary far fa-edit"}),
-                 e("span",{className:"text-danger fas fa-trash"})
+                 e("span",{className:"text-primary far fa-edit hover"}),
+                 e("span",{className:"text-danger fas fa-trash hover"})
                	  ),
                e("td",null,
                  e("a",{className:"btn btn-primary"},"Disabled")
@@ -649,6 +684,29 @@ componentDidMount(){
 
 })
 }
+deletecat(e) {
+  let id=e.target.getAttribute("name");
+
+   $.ajax({
+   Method:'GET',
+   url:'delete_cat.php',
+   data:{id:id}
+ }).then(data=>{
+
+  toast(data);
+
+    fetch("http://localhost/Denis/Admin/pro.php")
+.then(response=>response.json())
+.then(data=>{
+  let changed=this.state;
+  changed.tabledata=data;
+  changed.selected=data[0];
+   this.setState(changed);
+
+})
+ })  
+
+}
 
     render() {
 
@@ -670,7 +728,7 @@ let list=this.state.selected.Category.products;
 
     	return(
 
-e("div",{className:"row mx-2"},
+e("div",{className:"row mx-2 w-100", id:"product-body"},
 
  e("div",{className:"col-6"},
  e("div",{className:"card"},
@@ -678,6 +736,7 @@ e("div",{className:"row mx-2"},
  e("table",{className:"bg-primary w-100"},
  e("tr",null,
   e("td",null,
+    e("span",{className:"badge badge-primary float-right p-2",onClick:()=>this.props.click(8)},"Create Category"),
   	e("h4",null,this.state.title)),
      e("td",null,
      	 e("p",{className:"circle-badge float-right"},this.state.tabledata.length))
@@ -700,8 +759,8 @@ e("div",{className:"row mx-2"},
                   e("td",null,item.Category.name),
                   e("td",null,item.Category.products.length),
                   e("td",null,
-                      e("span",{className:"text-primary far fa-edit"}),
-                      e("span",{className:"text-danger fas fa-trash"})
+                      e("span",{id:item.id,className:"text-primary far fa-edit hover",onClick:(e)=>this.props.click(10,e.target.getAttribute("id"))}),
+                      e("span",{className:"text-danger fas fa-trash hover",name:item.id,onClick:(e)=>this.deletecat(e)})
                       )
                 )
             )
@@ -712,7 +771,7 @@ e("div",{className:"row mx-2"},
  ),
 
 
-  e(Products,{list:list})
+  e(Products,{list:list,click:this.props.click})
 
 )
 
@@ -1097,6 +1156,280 @@ const home2=()=>{
 
 		)
 }
+//add product section
+class AddProduct extends React.Component {
+ constructor(){
+  super();
+  this.state={
+    cat:[{
+      id:0,
+      name:"choose category",
+      value:""
+    },
+    {
+      id:1,
+      name:"Main Meals",
+      value:"fa-delicious"
+    },
+     {
+      id:2,
+      name:"Drinks",
+      value:"fa-coffee"
+    },
+      {
+      id:3,
+      name:"Beverages",
+      value:"fa-lemon-o"
+    },
+        {
+      id:4,
+      name:"Others",
+      value:"fa-birthday-cake"
+    }
+    ]
+  }
+ }
+
+
+ render() {
+  return(
+   e("div",{className:"w-100"},
+//h3
+e("h3",{className:"h3 text-center mt-1"},"Add Product  To Category"),
+e("form",{className:"w-50 mx-auto mt-5"},
+//product name
+e(
+"div",{className:"form-group"},
+   e("label",null,"Type Product Name:"),
+    e("div",{className:"input-group"},
+      e("div",{className:"input-group-prepend"},
+  e("span",{className:"input-group-text"},
+  e("i",{className:"fa fa-coffee"})
+    )
+        ),
+
+      e("input",{type:"text",className:"form-control",name:"product"})
+      )
+  ),//price
+e(
+"div",{className:"form-group"},
+   e("label",null,"Type Product Price:"),
+    e("div",{className:"input-group"},
+      e("div",{className:"input-group-prepend"},
+  e("span",{className:"input-group-text"},
+  e("i",{className:"fa fa-dollar-sign"})
+    )
+        ),
+
+      e("input",{type:"text",className:"form-control",name:"price"})
+      )
+  ),
+//seclect
+e("div",{className:"form-group"},
+e("label",null,"Select category"),
+ e("div",{className:"input-group"},
+   e("div",{className:"input-group-prepend"},
+      e("span",{className:"input-group-text"},
+      e("i",null,"Choose")
+        )
+    ),
+   //select
+   e("select",{className:"form-control",name:"category"},this.state.cat.map(item=>{
+
+  return  e("option",{value:item.value,key:item.id},item.name)
+   }))
+  )
+  ),
+
+e("div",{className:"form-group"},
+  e("button",{className:"btn btn-success w-100",name:"submit"},"Add",
+     e("span",{className:"fa fa-plus-square"})
+    )
+  )
+  )
+    )
+    ) //end of return
+ }
+ } 
+
+
+//end of product section
+
+
+//add cagegory section
+ 
+
+ class AddCategory extends React.Component {
+ constructor(){
+  super();
+  this.state={
+    edited:false,
+    name:"Category name",
+        cat:[{
+     
+      id:0,
+      name:"choose category",
+      value:""
+    },
+    {
+      id:1,
+      name:"Main Meals",
+      value:"fa-delicious"
+    },
+     {
+      id:2,
+      name:"Drinks",
+      value:"fa-coffee"
+    },
+      {
+      id:3,
+      name:"Beverages",
+      value:"fa-lemon-o"
+    },
+        {
+      id:4,
+      name:"Others",
+      value:"fa-birthday-cake"
+    }
+    ]
+  }
+ }
+
+componentDidMount() {
+
+  if(this.props.btntitle=="Edit"){
+ 
+   //id
+var id=this.props.prop;
+   $.get("onecategory.php",{id:id}).done(res=>{
+
+  let sc=this.state;
+  sc.name=res;
+  this.setState(sc);
+   })
+
+
+$("#cat_name").on("blur",(e)=>{
+
+  let value=e.target.value;
+  let column=e.target.getAttribute("name");
+
+//get here
+   $.ajax({
+   Method:'GET',
+   url:'edit_category.php',
+   data:{column:column,value:value,id:id}
+ }).then(data=>{
+  if(data.length==0) {
+      toast("Category name must be Unique");
+
+    }else {
+        toast(data);
+  let sc=this.state;
+  sc.edited=true;
+  this.setState(sc);
+    }
+
+  console.log(id);
+ })
+
+})
+ //when the select change
+
+ $("#cat_icon").on("change",(e)=>{
+
+  let value=e.target.value;
+  let column=e.target.getAttribute("name");
+//get here
+   $.ajax({
+   Method:'GET',
+   url:'edit_category.php',
+   data:{column:column,value:value,id:id}
+ }).then(data=>{
+  toast(data);
+  let sc=this.state;
+  sc.edited=true;
+  this.setState(sc);
+ })
+
+}) 
+  
+
+  }
+}
+editcat(){
+ if(this.state.edited) {
+  toast("You successfully Edited data");
+ }
+//CHECK IF THE EDITED IS TRUE
+}
+addcategory(e) {
+  e.preventDefault();
+ let name=$("#cat_name").val();
+ let icon=$("#cat_icon").val();
+
+//validate 
+if(name=="") {
+  alert("Kindly Enter category Name");
+}
+
+else if(icon==0) {
+  alert("Kindly Choose a category");
+}else {
+  //submit
+
+   $.ajax({
+   Method:'GET',
+   url:'newcategory.php',
+   data:{name:name,icon:icon}
+ }).then(data=>{
+  toast(data);
+ })
+
+}
+}
+
+
+ render() {
+  return(
+ e("div",{className:"w-100", id:"addcategory"},
+//row
+e("div",{className:"row mx-auto "},
+   e("div",{className:"card w-75 text-center mx-auto"},
+    e("h2",null,this.props.title)
+    )
+    ), //end of row
+//start form
+e("div",{className:"w-50 mx-auto mt-5"},
+e("div",{className:"form-group"},
+e("label",null,"Enter Cagetory Name"),
+e("input",{type:"text",name:"category_name",className:"form-control",id:"cat_name",placeholder:this.state.name})
+  ),
+//select icon
+e("div",{className:"form-group"},
+e("label",null,"Select Icon"),
+e("select",{name:"icon",className:"form-control",id:"cat_icon"},this.state.cat.map(item=>{
+  return(
+  e("option",{value:item.value,key:item.id},item.name)
+    )
+}))
+  ),
+//button
+e("div",{className:"form-group"},
+e("button",{className:"btn btn-primary d-inline-block  mr-4",onClick:()=>this.props.click(9)},
+e("span",{className:"fa fa-plus-square"},"Add Products")
+  ),
+e("button",{className:"btn btn-success d-inline-block",onClick:this.props.btntitle=="Save"?(e)=>this.addcategory(e):(e)=>this.editcat(e)},
+e("span",{className:"fa fa-plus-square"},this.props.btntitle)
+  )
+  )
+  )
+  )//end of wrapper
+    ) //end of return
+ }
+ } 
+
+//end of category section
 
 
 
@@ -1133,7 +1466,7 @@ const Update=(item,prop="")=> {
         	return(e(User,{click:Update}))
         	break;
         	case 3:
-        	return(e(Product))
+        	return(e(Product,{click:Update}))
         	break;
         	case 4:
         	return(e(Statisctic))
@@ -1146,6 +1479,15 @@ const Update=(item,prop="")=> {
           break;
             case 7:
           return(e(UserComponent,{prop:this.state.data,title:"Add User",btntitle:"Add"}))
+          break;
+           case 8:
+          return(e(AddCategory,{click:Update,prop:this.state.data,title:"Create new Category",btntitle:"Save"}))
+          break;
+          case 9:
+          return(e(AddProduct))
+          break;
+          case 10:
+          return(e(AddCategory,{click:Update,prop:this.state.data,title:"Edit Category",btntitle:"Edit"}))
           break;
         	default:
         	 return(e(Body))
