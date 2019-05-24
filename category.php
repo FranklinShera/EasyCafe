@@ -3,7 +3,7 @@
 require 'connection.php';
 require 'select_category.php';
 
-$sql="SELECT id,category_name,icon FROM `categories` ";
+$sql="SELECT id,category_name,icon FROM `categories` WHERE id IN (SELECT DISTINCT category FROM products) ";
 
 $categories=$con->query($sql);
 

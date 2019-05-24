@@ -2,7 +2,7 @@ const e=React.createElement;
 //users section
 //add user subsection
 
-function toast(msg) {
+function toast(msg, clas="bg-success") {
  //create icon element
   var icon=document.createElement("span");
      
@@ -13,7 +13,7 @@ var div=document.createElement("div");
 div.id="toast";
 
 //give it a classname
-div.className="card show bg-success border border-info ";
+div.className="card show"+" "+ clas+" "+ " border border-info ";
 var msg=msg;
 
 //create textNode
@@ -583,17 +583,18 @@ const Products=(props)=> {
          	),
          e("tbody",null,
            list.map(item=>{
+
            	return(
             e("tr",{key:item.id},
              e("td",null,item.id),
                e("td",null,item.name),
                e("td",null,"20"),
                e("td",null,
-                 e("span",{className:"text-primary far fa-edit hover"}),
-                 e("span",{className:"text-danger fas fa-trash hover"})
+                 e("span",{id:item.id,className:"text-primary far fa-edit hover",onClick:(e)=>props.click(11,e.target.id)}),
+                 e("span",{name:item.id,className:"text-danger fas fa-trash hover",onClick:(e)=>props.deleting(e)})
                	  ),
                e("td",null,
-                 e("a",{className:"btn btn-primary"},"Disabled")
+                 e("a",{ name:item.id,onClick:(e)=>props.enable(e),className:item.instock==1?"btn btn-primary":"btn btn-warning"},item.instock==1?"Disable":"Enable")
                	)
 
             	)
@@ -613,8 +614,8 @@ const Products=(props)=> {
  	)
 }
 class Product extends React.Component {
-    constructor() {
-    	super();
+    constructor(props) {
+    	super(props);
   this.state={
      title:"SELECT CATEGORY",
      title2:"Product List",
@@ -673,6 +674,10 @@ class Product extends React.Component {
     		
     }
 
+
+
+
+
 componentDidMount(){
   fetch("http://localhost/Denis/Admin/pro.php")
 .then(response=>response.json())
@@ -709,7 +714,85 @@ deletecat(e) {
 }
 
     render() {
+const disenable=(e)=>{
+let id=e.target.getAttribute("name");
+let text=e.target.innerHTML;
+let value=false;
+if(text=="Enable") {
+value=1;
+}else {
+  value=0;
+}
+//ajax to update here
 
+  $.ajax({
+   Method:'GET',
+   url:'disableProduct.php',
+   data:{instock:value,id:id}
+ }).done(res=>{
+if(res!=1) {
+toast(res);
+  //copy the state
+  let sc=this.state;
+  //get the selected category
+
+  let cid=sc.selected.id;
+//lets navigate to the actual category
+let index="";
+ for(var i=0;i<sc.tabledata.length;i++) {
+
+  if(sc.tabledata[i].id==cid) {
+index=i;
+
+  }
+ }
+
+//index of the products
+var Pindex="";
+//navigate to the category
+let selectedproducts=sc.tabledata[index].Category.products;
+for(var c=0;c<selectedproducts.length;c++) {
+  if(selectedproducts[c].id==id) {
+ Pindex=c;
+  }
+}
+
+//navigate to the product and change
+sc.tabledata[index].Category.products[Pindex].instock=value;
+console.log(sc.tabledata[index].Category.products[Pindex].instock);
+this.setState(sc);
+}
+
+ })
+
+}
+
+const deleteproductHandler= (e)=> {
+  //product id
+console.log(this);
+ let id= e.target.getAttribute("name");
+ //ajax
+
+    $.ajax({
+   Method:'GET',
+   url:'deleteProduct.php',
+   data:{id:id}
+ }).done(res=>{
+  toast(res);
+      fetch("http://localhost/Denis/Admin/pro.php")
+.then(response=>response.json())
+.then(data=>{
+
+   let changed=this.state;
+  changed.tabledata=data;
+  changed.selected=data[0];
+   this.setState(changed);
+
+})
+ })
+
+
+}
 const categoryHandler=(event)=>{
 
 let selected_category=	event.target.parentElement.id;
@@ -771,7 +854,7 @@ e("div",{className:"row mx-2 w-100", id:"product-body"},
  ),
 
 
-  e(Products,{list:list,click:this.props.click})
+  e(Products,{list:list,enable:disenable,click:this.props.click,deleting:deleteproductHandler})
 
 )
 
@@ -1161,6 +1244,7 @@ class AddProduct extends React.Component {
  constructor(){
   super();
   this.state={
+    updated:false,
     cat:[{
       id:0,
       name:"choose category",
@@ -1186,17 +1270,150 @@ class AddProduct extends React.Component {
       name:"Others",
       value:"fa-birthday-cake"
     }
-    ]
+    ],
+    product:{
+      id:"",
+      name:"",
+      amount:""
+    
+
+    }
   }
+
  }
 
+//get the all the categories
+componentDidMount() {
 
+
+
+  if(this.props.btntitle=="Edit") {
+
+   let id=this.props.prop;
+console.log(id);
+//ajax here
+     $.ajax({
+   Method:'GET',
+   url:'getProduct.php',
+   data:{id:id}
+  }).done((res)=>{
+
+  let data=JSON.parse(res);
+
+     let sc=this.state;
+     sc.product=data;
+      this.setState(sc);
+
+  })
+ //.then(res=>response.json())
+ //     .then(data=>{
+ //      console.log(data);
+ //      // let sc=this.state;
+ //      // sc.product=data;
+ //      // this.setState(sc);
+ //     })
+
+  }
+
+     fetch("http://localhost/Denis/Admin/getCategory.php")
+   .then(response=>response.json())
+   .then(data=>{
+let sc=this.state;
+sc.cat=data;
+this.setState(sc);
+
+   })
+}
+addproduct(e) {
+//get the details
+let name=$("#name").val();
+let price=$("#price").val();
+let category=$("#category").val();
+//
+if(name.length<2){
+  toast("Name must be greater than 2 characters","btn btn-danger");
+}else if(price.length==0) {
+  toast("Price is required","btn btn-danger")
+}else if(category==0) {
+  toast("please Choose Category","btn btn-danger","btn btn-danger");
+}else if(name>30){
+  toast("Name must be less than 30 characters","btn btn-danger");
+}else if(price<1) {
+  toast("Price must be greater than 0","btn btn-danger")
+}else {
+  //post the data
+     $.ajax({
+   Method:'GET',
+   url:'addproduct.php',
+   data:{name:name,price:price,category:category}
+ }).done(res=>{
+
+if(res==0) {
+toast("Error..try Unique name!!"," btn btn-danger");
+}else {
+  toast(res);
+}
+
+
+ })
+ 
+}
+
+
+}
+
+editproduct(e) {
+  //get the value
+let value=e.target.value;
+let id=this.props.prop;
+let column=e.target.getAttribute("name");
+
+if(value.length==""){
+  toast(column+" should be more than 2 characters","btn btn-danger");
+}else if(value.length>30) {
+  toast(column +" should be less than 30 characters","btn btn-danger");
+}else if(value=="0") {
+  toast("Please Choose a Category","btn btn-danger");
+}else {
+
+
+     $.ajax({
+   Method:'GET',
+   url:'editProduct.php',
+   data:{column:column,value:value,id:id}
+ }).done((res)=>{
+  if(res==1) {
+
+  }else {
+      toast(res);
+let sc=this.state;
+sc.updated=true;
+this.setState(sc);
+
+  }
+
+ })
+
+}
+//ajax
+
+  //get the column
+}
+
+//butn to check if editing was done
+editproductbtn(e){
+  if(this.state.updated) {
+    toast("Update was successful");
+  }else {
+    toast("You have not changed anything yet","bg-primary")
+  }
+}
  render() {
   return(
    e("div",{className:"w-100"},
 //h3
-e("h3",{className:"h3 text-center mt-1"},"Add Product  To Category"),
-e("form",{className:"w-50 mx-auto mt-5"},
+e("h3",{className:"h3 text-center mt-1"},this.props.btntitle=="Edit"?this.props.title:"Add Product To Category"),
+e("div",{className:"w-50 mx-auto mt-5"},
 //product name
 e(
 "div",{className:"form-group"},
@@ -1208,7 +1425,11 @@ e(
     )
         ),
 
-      e("input",{type:"text",className:"form-control",name:"product"})
+      e("input",{type:"text",
+        className:"form-control",
+        name:"name", id:"name",
+        onBlur:this.props.btntitle=="Edit"?(e)=>this.editproduct(e):"",
+        placeholder:this.state.product.name})
       )
   ),//price
 e(
@@ -1221,7 +1442,11 @@ e(
     )
         ),
 
-      e("input",{type:"text",className:"form-control",name:"price"})
+      e("input",{type:"text",
+        className:"form-control",
+        name:"amount",id:"price",
+        onBlur:this.props.btntitle=="Edit"?(e)=>this.editproduct(e):"",
+        placeholder:this.state.product.price})
       )
   ),
 //seclect
@@ -1234,15 +1459,22 @@ e("label",null,"Select category"),
         )
     ),
    //select
-   e("select",{className:"form-control",name:"category"},this.state.cat.map(item=>{
+   e("select",{className:"form-control",
+    name:"category",
+    onChange:this.props.btntitle=="Edit"?(e)=>this.editproduct(e):"",
+    id:"category"},
+  e("option",{value:"0"},"Choose Category"),this.state.cat.map(item=>{
 
-  return  e("option",{value:item.value,key:item.id},item.name)
+  return  e("option",{value:item.id,key:item.id},item.name)
    }))
   )
   ),
 
 e("div",{className:"form-group"},
-  e("button",{className:"btn btn-success w-100",name:"submit"},"Add",
+  e("button",{className:"btn btn-success w-100",
+    name:"submit",
+    onClick:this.props.btntitle=="Edit"?(e)=>this.editproductbtn(e):(e)=>this.addproduct(e)},
+    this.props.btntitle=="Edit"?this.props.btntitle:"Add",
      e("span",{className:"fa fa-plus-square"})
     )
   )
@@ -1488,6 +1720,9 @@ const Update=(item,prop="")=> {
           break;
           case 10:
           return(e(AddCategory,{click:Update,prop:this.state.data,title:"Edit Category",btntitle:"Edit"}))
+          break;
+           case 11:
+          return(e(AddProduct,{prop:this.state.data,title:"Edit Product Details",btntitle:"Edit"}))
           break;
         	default:
         	 return(e(Body))
