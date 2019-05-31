@@ -2,7 +2,7 @@ const e=React.createElement;
 //users section
 //add user subsection
 
-function toast(msg, clas="bg-success") {
+function toast(msg, clas="bg-success",time=3000) {
  //create icon element
   var icon=document.createElement("span");
      
@@ -31,7 +31,7 @@ setTimeout(function(){
   div.className=div.className.replace("show","");
 
   div.parentNode.removeChild(div);
-},3000)
+},time)
 
 
 }
@@ -67,7 +67,7 @@ this.setState({data:JSON.parse(data)});
 //get the email
 
 getfile(e) {
-console.log(e.target.value);
+
 }
 //validation function
 validate(value,column) {
@@ -704,9 +704,28 @@ deletecat(e) {
 .then(response=>response.json())
 .then(data=>{
   let changed=this.state;
-  changed.tabledata=data;
-  changed.selected=data[0];
-   this.setState(changed);
+  let cid=changed.selected.id;
+
+  let index="";
+  //find the index of active category
+  for(let k=0;k<changed.tabledata.length;k++) {
+    if(changed.tabledata[k].id==cid) {
+      index=i;
+    }
+    //navigate through the category
+    let remain=changed.tabledata[index].Category.products.filter(item=>{
+
+      if(item.id==id) {
+        return item;
+      }
+    })
+
+  changed.tabledata[index].Category.products=remain;
+  this.setState(changed);
+  }
+  // changed.tabledata=data;
+  // changed.selected=data[0];
+  //  this.setState(changed);
 
 })
  })  
@@ -759,7 +778,7 @@ for(var c=0;c<selectedproducts.length;c++) {
 
 //navigate to the product and change
 sc.tabledata[index].Category.products[Pindex].instock=value;
-console.log(sc.tabledata[index].Category.products[Pindex].instock);
+
 this.setState(sc);
 }
 
@@ -769,7 +788,8 @@ this.setState(sc);
 
 const deleteproductHandler= (e)=> {
   //product id
-console.log(this);
+
+
  let id= e.target.getAttribute("name");
  //ajax
 
@@ -876,8 +896,9 @@ const Aggregate=(props)=>{
     )
 }
 
-const Graph=()=> {
-  const month=["Select Month","January","February","March","April","May","June","July","August","September","October","November","December"];
+const Graph=(props)=> {
+  const month=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const week=props.weeks;
   return(
  e("div",{className:"card",id:"stat_top_card"},
     e("table",{className:"table"},
@@ -886,10 +907,18 @@ const Graph=()=> {
            e("td",null,
             e("h4",null,"Weekly Transactions")
             ),
-             e("td",null,e("select",{name:"Month",className:"form-control",defaultValue:"Select month"},
+             e("td",null,e("select",{name:"Month",id:"month",className:"form-control",defaultValue:0,onChange:(e)=>props.MonthEvent(e)},
               month.map(item=>{
                 return(
            e("option",{value:month.indexOf(item),key:item},item)
+                  )
+              })
+              )),
+               e("td",null,e("select",{name:"week",id:"week",className:"form-control",defaultValue:1, onChange:(e)=>props.weekEvent(e)},
+              week.map(item=>{
+                let titem=item+1;
+                return(
+           e("option",{value:titem,key:item},"week "+titem)
                   )
               })
               ))
@@ -903,43 +932,252 @@ const Graph=()=> {
 class Statisctic extends React.Component {
        constructor(){
         super();
+        this.state={
+           sales:123,
+           Transaction:30,
+           daysT:[10,10,100,0,0,0,0],
+           weeks:[12,23,45,78]
+
+        }
+       
        }
+
+
+
    componentDidMount() {
-    //get canvas
-  var canvas=document.querySelector("#canvas");
 
-  //get context
-  var context=canvas.getContext("2d");
-var values=['10','100','300','320','10','100','350'];
-  //declare constant width
-  var width=60;
-  var X=0;//starting x-axis position
-  var colors=['#811',"#6E16A2",'#811',"#6E16A2",'#811',"#6E16A2",'#811'];
-  context.fillStyle="#811";
-  for (var i = 0; i < values.length; i++) {
-    
-      context.fillStyle=colors[i];
-    
-    var h=values[i];
-    //draw
-    context.fillRect(X,canvas.height-h,width,h);
+  
+ let draw=(value)=>{
 
-    X+=width+1;
+  var chart = new CanvasJS.Chart("canvas", {
+  theme: "light2", // "light2", "dark1", "dark2"
+  animationEnabled: true, // change to true   
+  title:{
+    text: "Weekly Sales"
+  },
+  data: [
+  {
+    // Change type to "bar", "area", "spline", "pie",etc.
+    type: "column",
+    dataPoints: [
+      { label: "Mon",  y: value[0]  },
+      { label: "Tue", y: value[1]  },
+      { label: "Wen", y: value[2] },
+      { label: "Thur",  y: value[3] },
+      { label: "Fri",  y: value[4]  },
+      { label: "Sat",  y: value[5]  },
+      { label: "Sun",  y: value[6]  }
+    ]
   }
+  ]
+});
+chart.render();
+
+
+
+// var 
+
+//     const {selected}=this.state;
+//     //sales
+    
+//     //Transactions
+//     // let transactions=this
+
+//     //get canvas
+//   var canvas=document.querySelector("#canvas");
+
+//   //get context
+//   var context=canvas.getContext("2d");
+
+//   //declare constant width
+//   var width=60;
+//   var X=0;//starting x-axis position
+//   var colors=['#811',"#6E16A2",'#811',"#6E16A2",'#811',"#6E16A2",'#811'];
+//   context.fillStyle="#811";
+//   for (var i = 0; i < values.length; i++) {
+    
+//       context.fillStyle=colors[i];
+    
+//     var h=values[i]/10;
+//     //draw
+//     context.fillRect(X,canvas.height-h,width,h);
+
+//     X+=width+1;
+//   }
+
+  
+ }
+      $.ajax({
+   Method:'GET',
+   url:'get_weeks.php',
+   data:{id:1}
+  }).done((res)=>{
+ let sc=this.state;
+  sc.weeks=JSON.parse(res)
+  this.setState(sc);
+  })
+
+ //perform a fetch of data
+ 
+    fetch("http://localhost/Denis/Admin/statistic.php?week=1&month=1")
+     .then(response=>response.json())
+     .then(data=>{
+    var sc1=this.state;
+    sc1.sales=parseInt(data.sales1);
+    sc1.Transaction=data.aggregateT;
+    sc1.daysT=[parseInt(data.weeks.Mon),
+   parseInt(data.weeks.Tue),
+  parseInt(data.weeks.Wen),
+   parseInt(data.weeks.Thur),
+
+   parseInt(data.weeks.Fri),
+   parseInt(data.weeks.Sat),
+   parseInt(data.weeks.Sun)
+    ];
+//console.log(sc.daysT);
+    this.setState(sc1);
+
+draw(this.state.daysT);
+     })
+
+ var value=this.state.daysT; 
+ var chart = new CanvasJS.Chart("canvas", {
+  theme: "light2", // "light2", "dark1", "dark2"
+  animationEnabled: true, // change to true   
+  title:{
+    text: "Weekly Sales"
+  },
+  data: [
+  {
+    // Change type to "bar", "area", "spline", "pie",etc.
+    type: "column",
+    dataPoints: [
+      { label: "Mon",  y: value[0]  },
+      { label: "Tue", y: value[1]  },
+      { label: "Wen", y: value[2] },
+      { label: "Thur",  y: value[3] },
+      { label: "Fri",  y: value[4]  },
+      { label: "Sat",  y: value[5]  },
+      { label: "Sun",  y: value[6]  }
+    ]
+  }
+  ]
+});
+chart.render();
 
    }
        render() {
+  
+ let draw1=(value)=>{
+ var chart = new CanvasJS.Chart("canvas", {
+  theme: "light2", // "light2", "dark1", "dark2"
+  animationEnabled: true, // change to true   
+  title:{
+    text: "Weekly Sales"
+  },
+  data: [
+  {
+    // Change type to "bar", "area", "spline", "pie",etc.
+    type: "column",
+    dataPoints: [
+      { label: "Mon",  y: value[0]  },
+      { label: "Tue", y: value[1]  },
+      { label: "Wen", y: value[2] },
+      { label: "Thur",  y: value[3] },
+      { label: "Fri",  y: value[4]  },
+      { label: "Sat",  y: value[5]  },
+      { label: "Sun",  y: value[6]  }
+    ]
+  }
+  ]
+});
+chart.render();
 
+  
+ }
+
+ let changeStateM=(e)=> {
+
+      let value=  parseInt(e.target.value)+1;
+      
+      
+         $.ajax({
+   Method:'GET',
+   url:'get_weeks.php',
+   data:{id:value}
+  }).done((res)=>{
+ let sc=this.state;
+  sc.weeks=JSON.parse(res)
+  this.setState(sc);
+let week=$("#week").val();
+let url="http://localhost/Denis/Admin/statistic.php?week="+week+"&month="+value;
+//then update the drawing here by fetching again
+fetch(url)
+     .then(response=>response.json())
+     .then(data=>{
+    var sc1=this.state;
+    sc1.sales=parseInt(data.sales1);
+    sc1.Transaction=data.aggregateT;
+    sc1.daysT=[parseInt(data.weeks.Mon),
+   parseInt(data.weeks.Tue),
+  parseInt(data.weeks.Wen),
+   parseInt(data.weeks.Thur),
+
+   parseInt(data.weeks.Fri),
+   parseInt(data.weeks.Sat),
+   parseInt(data.weeks.Sun)
+    ];
+//console.log(sc.daysT);
+    this.setState(sc1);
+
+draw1(this.state.daysT);
+
+     })
+
+  })
+
+    }
+
+  let changeStateW=(e)=> {
+    let week=  parseInt(e.target.value)
+   let month=parseInt($("#month").val())+1;
+let url="http://localhost/Denis/Admin/statistic.php?week="+week+"&month="+month;
+//then update the drawing here by fetching again
+fetch(url)
+     .then(response=>response.json())
+     .then(data=>{
+    var sc1=this.state;
+    sc1.sales=parseInt(data.sales1);
+    sc1.Transaction=data.aggregateT;
+    sc1.daysT=[parseInt(data.weeks.Mon),
+   parseInt(data.weeks.Tue),
+  parseInt(data.weeks.Wen),
+   parseInt(data.weeks.Thur),
+
+   parseInt(data.weeks.Fri),
+   parseInt(data.weeks.Sat),
+   parseInt(data.weeks.Sun)
+    ];
+//console.log(sc.daysT);
+    this.setState(sc1);
+
+draw1(this.state.daysT);
+
+     })
+
+
+//do the fetch now
+    }
         return(
-          e("div",{className:"row"},
+          e("div",{className:"row w-100",id:"statistic"},
           e("div",{className:"col-md-4"},
-                e(Aggregate,{amount:"123",Text:"AGGREGATE SALES"}),
-                e(Aggregate,{amount:"12",Text:"AGGREGATE TRANSACTIONS"})
+                e(Aggregate,{amount:this.state.sales,Text:"AGGREGATE SALES"}),
+                e(Aggregate,{amount:this.state.Transaction,Text:"AGGREGATE TRANSACTIONS"})
             )
             ,
             e("div",{className:"col-md-8 mx-auto"},
-              e(Graph),
-               e("canvas",{id:"canvas",height:"350",width:"500",style:{border:"1px solid white",className:"mt-1"}})
+              e(Graph,{weeks:this.state.weeks,weekEvent:changeStateW,MonthEvent:changeStateM}),
+               e("div",{id:"canvas",height:"350",width:"500",style:{border:"1px solid white",className:"mt-1"}})
               )
             )
           ) 
@@ -953,7 +1191,7 @@ var values=['10','100','300','320','10','100','350'];
 //START OF PROMOTION SECTION
 const PromoCard=(props)=>{
   return(
-     e("div",{className:"btn btn-primary w-75 promo_btn mt-5  p-5"},props.title)
+     e("div",{className:"btn btn-primary w-75 promo_btn mt-5  p-5 promocard"},props.title)
     )
 }
 
@@ -961,7 +1199,7 @@ const PromoDiv=()=> {
   return(
     e("div",{className:"col-6 p-2"},
 
- e(PromoCard,{title:"New Promotion"}),
+ e(PromoCard,{title:"New Promotions"}),
  e(PromoCard,{title:"Edit Promotion"}),
  e(PromoCard,{title:"View Promotion"})
       )
@@ -973,14 +1211,106 @@ class CreatePromo extends React.Component {
   constructor() {
     super();
     this.state={
-      Categories:["Main Meals","Beverages","Drinks","Others"],
-      products:["Ugali Makande","Rice Beans","Uji Moto","Menginevyo"]
+ 
+ tabledata:[
+{
+   "id":"1","Category":{
+    "name":"Main Meals1111",
+    "products":[
+     {"id":"1","name":"UGALI MIX"},
+     {"id":"2","name":"Rice MIX"}
+    ]
+   }
+  },
+
+{    "id":"2","Category":{
+   "name":"Drinks",
+   "products":[
+    {"id":"3","name":"Soda"},
+    {"id":"4","name":"Others"}
+   ]
+   }
+ },
+{   "id":"3","Category":{
+ "name":"Beverages",
+ "products":[
+  {"id":"5","name":"Soda"},
+  {"id":"6","name":"Others"}
+ ]
+ }
+},
+{    "id":"4","Category":{ 
+   "name":"others",
+   "products":[
+    { "id":"7","name":"Soda"},
+    { "id":"8","name":"Others"}
+   ]
+ }
+}
+ ],
+ active:1
     }
 
   }
 
-  render() {
 
+ componentDidMount() {
+    fetch("http://localhost/Denis/Admin/pro.php")
+.then(response=>response.json())
+.then(data=>{
+  let changed=this.state;
+  changed.tabledata=data;
+  changed.active=1;
+   this.setState(changed);
+ 
+})
+ }
+
+  render() {
+    const newPromotion=()=>{
+     let name=$("#promoname").val();
+     let id=$("#productid").val();
+     let priceoff=$("#priceoff").val()/100;
+
+if(name.length<2) {
+  toast("Name must be greater than 2 characters","bg-danger",4000);
+  return;
+}else if(priceoff==0){
+  toast("Price must be greater than 0","bg-danger",4000);
+}
+
+else {
+
+
+    //post the data
+         $.ajax({
+   Method:'GET',
+   url:'addpromotion.php',
+   data:{id:id,name:name,priceoff:priceoff}
+  }).done((res)=>{
+
+if(res==1) {
+toast( " promotion already exist","bg-warning",4000)
+}else {
+  toast(res)
+}
+
+    })
+}
+}
+  const   changeState=(e)=> {
+ let id=e.target.value;
+ let sc=this.state;
+ sc.active=id;
+ this.setState(sc);
+ }
+    const selected=this.state.tabledata.filter(item=>{
+      if(item.id==this.state.active){
+        return item
+      }
+    })
+
+ const {active}=this.state;
     return(
      e("div",{className:"col-6 mt-5 p-2"},
          e("div",{className:"card w-75"},
@@ -990,47 +1320,58 @@ class CreatePromo extends React.Component {
          e("form",{className:"px-2"},
           e("div",{className:"form-group"},
                 e("label",null,"Enter Promotion name:"),
-                e("input",{type:"text",name:"prom_name", className:"form-control"})
+                e("input",{type:"text",id:"promoname",name:"prom_name", className:"form-control"})
             ),
 
            e("div",{className:"form-group"},
                 e("label",null,"Select Category:"),
-                e("select",{name:"Category" ,className:"form-control"},
-                      this.state.Categories.map(item=>{
+                e("select",{name:"Category",
+                   onChange:(e)=>changeState(e) ,
+                   id:"category",
+                 className:"form-control"},
+                      this.state.tabledata.map(item=>{
+
                         return(
-                   e("option",{value:this.state.Categories.indexOf(item),key:item},item)
+                   e("option",{value:item.id,key:item.id},item.Category.name)
                           )
                       })
                   )
             ),
            e("div",{className:"form-group"},
                 e("label",null,"Select Product:"),
-                e("select",{name:"product_promo", className:"form-control"},
-                      this.state.products.map(item=>{
+                e("select",{name:"product_promo",
+                   id:"productid",
+                 className:"form-control"},
+                    selected[0].Category.products.map(item=>{
                         return(
-                   e("option",{value:this.state.Categories.indexOf(item),key:item},item)
+                   e("option",{value:item.id,id:item.id,key:item.id},item.name)
                           )
                       })
                   )
             ),
            e("div",{className:"form-group"},
                 e("label",null,"Enter Price Off:"),
-                e("input",{type:"number",name:"priceoff" ,className:"form-control"})
+                e("input",{type:"number",name:"priceoff",id:"priceoff" ,className:"form-control"})
             ),
            e("div",{className:"form-group"},
           
-                e("input",{type:"button",name:"prom_submit" ,className:"btn btn-success w-100 py-3",value:"Submit"})
+                e("input",{type:"button",
+                  name:"prom_submit" ,
+                  className:"btn btn-success w-100 py-3",
+                  onClick:()=>newPromotion(),
+                  value:"Submit"})
             )
            )
           )
       )
       )
+ }
   }
-}
+
 
 const PromotionB=()=> {
   return(
-    e("div",{className:"row"},
+    e("div",{className:"row w-100", id:"promotion"},
         e(PromoDiv),
         e(CreatePromo)
       )
@@ -1056,7 +1397,7 @@ class Nav extends React.Component {
       let chang=this.state;
       chang.user=data;
       this.setState(chang);
-      console.log(this.state.user);
+      
      })
   }
 	render() {
@@ -1286,11 +1627,10 @@ class AddProduct extends React.Component {
 componentDidMount() {
 
 
-
   if(this.props.btntitle=="Edit") {
 
    let id=this.props.prop;
-console.log(id);
+
 //ajax here
      $.ajax({
    Method:'GET',
@@ -1562,7 +1902,7 @@ $("#cat_name").on("blur",(e)=>{
   this.setState(sc);
     }
 
-  console.log(id);
+
  })
 
 })

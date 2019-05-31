@@ -240,7 +240,7 @@ text-shadow:2px 0px 5px rgba(0,0,0,.6);
 background-color: #9A1F41;
 color:white;
 }
-canvas {
+#canvas {
 	width:100%;
 	height:500px;
 }
@@ -320,6 +320,10 @@ footer {
 	}
 	#allpromotion .table tr td:nth-child(odd) {
 background-color: #D9CDCD;
+	}
+	.promocard:hover {
+  background: #fff ;
+  color:blue !important;
 	}
 
 

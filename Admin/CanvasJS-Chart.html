@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script type="text/javascript">
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("canvas", {
+	theme: "light2", // "light2", "dark1", "dark2"
+	animationEnabled: true, // change to true		
+	title:{
+		text: "Weekly Sales"
+	},
+	data: [
+	{
+		// Change type to "bar", "area", "spline", "pie",etc.
+		type: "column",
+		dataPoints: [
+			{ label: "Mon",  y: 1040  },
+			{ label: "Tue", y: 15  },
+			{ label: "Wen", y: 25  },
+			{ label: "Thur",  y: 3000  },
+			{ label: "Fri",  y: 28  },
+			{ label: "Sat",  y: 40  },
+			{ label: "Sun",  y: 40  }
+		]
+	}
+	]
+});
+chart.render();
+
+}
+</script>
+</head>
+<body>
+<div id="canvas" style="height: 350px; max-width: 500px; margin: 0px auto;border:1px solid white" class="mt-1"></div>
+
+<!-- <canvas id="canvas"  height="350" width="500" style="border:1px solid white" class="mt-1"> -->
+	
+</canvas>
+<script src="canvasjs.min.js"> </script>
+</body>
+</html>
