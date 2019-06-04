@@ -55,5 +55,5 @@ if(!isset($_SESSION['server'])) {
 		<script src="react.js"></script>
 		<script src="react-dom.js"></script>
        <script src="canvasjs.min.js"> </script>
-		<script src="app.js"></script>
+		<script src="app.js" type="module"></script>
 </body>

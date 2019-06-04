@@ -208,7 +208,10 @@ color:#6E16A2;
 text-shadow:2px 0px 5px rgba(0,0,0,.6);
 }
 
-
+.hover1{
+	font-size: 26px !important;
+	color:red !important;
+}
 
 
 /*........END PROMO STYLES*/

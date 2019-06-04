@@ -1,4 +1,5 @@
 const e=React.createElement;
+import {Allpromotion} from './allpromotion.js';
 //users section
 //add user subsection
 
@@ -1191,17 +1192,18 @@ draw1(this.state.daysT);
 //START OF PROMOTION SECTION
 const PromoCard=(props)=>{
   return(
-     e("div",{className:"btn btn-primary w-75 promo_btn mt-5  p-5 promocard"},props.title)
+     e("div",{className:"btn btn-primary w-75 promo_btn mt-5  p-5 promocard",
+      onClick:()=>props.click(12)},props.title)
     )
 }
 
-const PromoDiv=()=> {
+const PromoDiv=(props)=> {
   return(
     e("div",{className:"col-6 p-2"},
 
- e(PromoCard,{title:"New Promotions"}),
- e(PromoCard,{title:"Edit Promotion"}),
- e(PromoCard,{title:"View Promotion"})
+ e(PromoCard,{title:"Delete Promotions",click:props.click}),
+ e(PromoCard,{title:"Edit Promotion",click:props.click}),
+ e(PromoCard,{title:"View Promotion",click:props.click})
       )
 
     )
@@ -1369,10 +1371,10 @@ toast( " promotion already exist","bg-warning",4000)
   }
 
 
-const PromotionB=()=> {
+const PromotionB=(props)=> {
   return(
     e("div",{className:"row w-100", id:"promotion"},
-        e(PromoDiv),
+        e(PromoDiv,{click:props.click}),
         e(CreatePromo)
       )
     )
@@ -2044,7 +2046,7 @@ const Update=(item,prop="")=> {
         	return(e(Statisctic))
         	break;
         	case 5:
-        	return(e(PromotionB))
+        	return(e(PromotionB,{click:Update}))
         	break;
           case 6:
           return(e(UserComponent,{prop:this.state.data,title:"EDIT USER",btntitle:"Save"}))
@@ -2064,6 +2066,10 @@ const Update=(item,prop="")=> {
            case 11:
           return(e(AddProduct,{prop:this.state.data,title:"Edit Product Details",btntitle:"Edit"}))
           break;
+          case 12:
+          return(e(Allpromotion))
+          break;
+
         	default:
         	 return(e(Body))
         	 break;
