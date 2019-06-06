@@ -1,5 +1,7 @@
 const e=React.createElement;
 import {Allpromotion} from './allpromotion.js';
+import {Alltransaction} from './alltransaction.js';
+import {Allproducts} from './allproducts.js';
 //users section
 //add user subsection
 
@@ -1473,7 +1475,7 @@ class FirstRow extends React.Component {
 		super();
 		this.state={
 			data:[{id:"customers",qty:200,desc:"Customers Served"},
-			{id:"products",qty:210,desc:"Product Sold"},
+			{id:"products",qty:210,desc:"Total Product Sales"},
 			{id:"sales",qty:20,desc:"Today's Total Sales"}]
 		}
 	}
@@ -1483,9 +1485,9 @@ class FirstRow extends React.Component {
 		 .then(response=>response.json())
 		 .then(data=>{
 		 	this.setState({
-			data:[{id:"customers",qty:data.Customers,desc:"Customers Served"},
-			{id:"products",qty:data.products_sold,desc:"Product Sold"},
-			{id:"sales",qty:data.sales,desc:"Today's Total Sales"}]
+			data:[{id:"customers",qty:data.Customers,desc:"Customers Served",click:this.props.click,idB:13},
+			{id:"products",qty:data.products_sold,desc:"Total Product Sales",click:this.props.click,idB:14},
+			{id:"sales",qty:data.sales,desc:"Today's Total Sales",click:this.props.click,idB:15}]
 		})
 
 
@@ -1495,7 +1497,7 @@ class FirstRow extends React.Component {
 		return(
           e("div",{className:"row mx-auto"},this.state.data.map(item=>{
           	return(
-          		e("div",{key: item.id,className:"col-4"},e(
+          		e("div",{key: item.id,className:"col-4",onClick:()=>item.click(item.idB)},e(
                    "div",{className:"row rounded",id:item.id},
                    e("div",{className:"col-6 amount"},item.qty),
                    e("div",{className:"col-6 description p-1"},item.desc)
@@ -1561,7 +1563,7 @@ class Body extends React.Component {
 	render() {
 		return(
          e("div",{className:"w-100"},
-         e(FirstRow),
+         e(FirstRow,{click:this.props.click}),
          e(SecondRow)
          	)
 			)
@@ -2034,7 +2036,7 @@ const Update=(item,prop="")=> {
 
 	switch(data) {
         	case 1:
-        	return(e(Body))
+        	return(e(Body,{click:Update}))
         	break;
         	case 2:
         	return(e(User,{click:Update}))
@@ -2068,6 +2070,13 @@ const Update=(item,prop="")=> {
           break;
           case 12:
           return(e(Allpromotion))
+          break;
+          
+          case 13:
+          return(e(Alltransaction))
+          break;
+            case 14:
+          return(e(Allproducts))
           break;
 
         	default:

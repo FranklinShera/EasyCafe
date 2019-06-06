@@ -1,5 +1,5 @@
 
 const e=React.createElement;
-import {Allpromotion} from './allpromotion.js';
+import {Allproducts} from './allproducts.js';
 
-ReactDOM.render(e(Allpromotion),document.querySelector("#body"))
+ReactDOM.render(e(Allproducts),document.querySelector("#body"))
